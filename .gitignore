@@ -22,6 +22,7 @@ ExportedObj/
 *.booproj
 *.svd
 *.pdb
+*.mdb
 *.opendb
 *.VC.db
 
@@ -35,5 +36,3 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
-*.meta
-*.log
