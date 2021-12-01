@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
         if(Physics.Raycast(CalculateMousePos(), out RaycastHit hitInfo))
         {
             target = hitInfo.point;
-            target.y = 0;
+            target.y = transform.position.y;
             var distance = target - transform.position;
             if(distance.magnitude >= 0.05)
             {
