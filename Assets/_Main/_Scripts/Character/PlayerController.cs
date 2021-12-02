@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float speed;
@@ -9,10 +9,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float rotSpeed;
     [SerializeField] private Transform mouseIndicator;
     private Vector3 target;
+    [SerializeField] private List<FishScriptableObject> fished = new List<FishScriptableObject>();
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        GameManager.instance.player = this;
+
     }
 
     // Update is called once per frame
@@ -57,5 +60,9 @@ public class PlayerController : MonoBehaviour
     void MoveMouseIndicator()
     {
         mouseIndicator.position = target;
+    }
+   public void AddToInventory(FishScriptableObject fishToAdd)
+    {
+        fished.Add(fishToAdd);
     }
 }
