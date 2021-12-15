@@ -11,7 +11,7 @@ public class FishController : MonoBehaviour
     [SerializeField] private int maxFishes;
     private void Start()
     {
-        fishQuantity = Random.Range(1, fishQuantity);
+        fishQuantity = Random.Range(1, maxFishes);
         target = GameManager.instance.player;
     }
     private void Update()
@@ -21,15 +21,9 @@ public class FishController : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.layer == LayerMask.NameToLayer(contactLayers))
-        {
-            GetFish();
-        }
-    }
 
-    void GetFish()
+
+    public void GetFish()
     {
         var fishToGet = Random.Range(0, fishes.Count);
         target.AddToInventory(fishes[fishToGet]);
