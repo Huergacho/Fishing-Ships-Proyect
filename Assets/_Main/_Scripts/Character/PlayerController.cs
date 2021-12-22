@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]private float rotationSpeed;
     [SerializeField] private float radius;
 
+    private bool canMove;
+    private Vector3 targetPoint;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,45 +25,26 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        MoveWithMouseInput();
+        MoveAtMousePos();
         MoveMouseIndicator();
+        UpdateMousePosition();
     }
     Ray CalculateMousePos()
     {
         return Camera.main.ScreenPointToRay(Input.mousePosition);
     }
-    void LookAtMousePosition()
+    void UpdateMousePosition()
     {
         
         if(Physics.Raycast(CalculateMousePos(), out RaycastHit hitInfo))
         {
             target = hitInfo.point;
             target.y = transform.position.y;
-            var distance = target - transform.position;
-            if(distance.magnitude >= 0.05)
-            {
-                //transform.LookAt(mouseIndicator);
-                SmoothRotation(target);
-            }
-        }
-    }
-    void MoveWithMouseInput()
-    {
-        LookAtMousePosition();
-
-        if (Input.GetMouseButton(1))
-        {
-            var distance = target - transform.position;
-            if (distance.magnitude >= 0.05)
-                transform.position += transform.forward *  speed * Time.deltaTime;
         }
     }
     void MoveMouseIndicator()
-    {
-        var clampedTarget = Vector3.ClampMagnitude(target, radius);
-        mouseIndicator.position = clampedTarget;
-        
-       
+    {    
+        mouseIndicator.position = target;  
     }
    public void AddToInventory(FishScriptableObject fishToAdd)
     {
@@ -70,8 +53,31 @@ public class PlayerController : MonoBehaviour
     private void SmoothRotation(Vector3 target)
     {
         var direction = (target - transform.position);
+        if(direction != Vector3.zero)
+        {
+
         var rotDestiny = Quaternion.LookRotation(direction);
         transform.rotation = Quaternion.Slerp(transform.rotation,rotDestiny,rotationSpeed * Time.deltaTime);
+        }
+    }
+    private void MoveAtMousePos()
+    {
+  
+        var distance = target - transform.position;
+        if (Input.GetMouseButton(1))
+        {
+            canMove = true;
+            targetPoint = target;
+        }
+        if (distance.magnitude < 0.05)
+        {
+            canMove = false;
+        }
+        if (canMove)
+        {    
+            SmoothRotation(targetPoint);
+            transform.position = Vector3.MoveTowards(transform.position, targetPoint, speed * Time.deltaTime);
+        }
     }
 
 }
