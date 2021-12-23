@@ -12,14 +12,14 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]private float rotationSpeed;
     [SerializeField] private float radius;
-
+    [SerializeField] private Transform pointer;
     private bool canMove;
     private Vector3 targetPoint;
     // Start is called before the first frame update
     void Start()
     {
         GameManager.instance.player = this;
-        mouseIndicator.position = transform.position;
+        pointer.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
         }
     }
     void MoveMouseIndicator()
-    {    
+    {
         mouseIndicator.position = target;  
     }
    public void AddToInventory(FishScriptableObject fishToAdd)
@@ -66,6 +66,7 @@ public class PlayerController : MonoBehaviour
         var distance = target - transform.position;
         if (Input.GetMouseButton(1))
         {
+            PointMovePosition();
             canMove = true;
             targetPoint = target;
         }
@@ -79,5 +80,17 @@ public class PlayerController : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, targetPoint, speed * Time.deltaTime);
         }
     }
+    private void PointMovePosition()
+    {
+        pointer.position = targetPoint;
+        pointer.gameObject.SetActive(true);
+        StartCoroutine(RippleEffect());
 
+    }
+    IEnumerator RippleEffect()
+    {
+        yield return new WaitForSeconds(3f);
+        pointer.gameObject.SetActive(false);
+
+    }
 }
