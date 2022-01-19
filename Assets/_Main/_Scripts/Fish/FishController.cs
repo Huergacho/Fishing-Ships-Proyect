@@ -21,8 +21,6 @@ public class FishController : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
-
     public void GetFish()
     {
         var fishToGet = Random.Range(0, fishes.Count);

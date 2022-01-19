@@ -8,8 +8,8 @@ public class FishingNet : MonoBehaviour
     [SerializeField]private bool isFishing;
     private void Update()
     {
-        
     }
+
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.layer == LayerMask.NameToLayer(contactLayers))
@@ -18,7 +18,6 @@ public class FishingNet : MonoBehaviour
             {
                 other.gameObject.GetComponent<FishController>().GetFish();
                 isFishing = true;
-                Debug.Log("Input");
             }
             else
             {

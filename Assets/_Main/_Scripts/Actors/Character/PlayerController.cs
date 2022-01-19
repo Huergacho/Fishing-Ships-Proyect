@@ -12,23 +12,21 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]private float rotationSpeed;
     [SerializeField] private float radius;
-    [SerializeField] private Transform pointer;
     private bool canMove;
     private Vector3 targetPoint;
-    // Start is called before the first frame update
+
     void Start()
     {
+        InputController.inputControllerInstance.pointEvent += MoveListener;
         GameManager.instance.player = this;
-        pointer.gameObject.SetActive(false);
     }
-
-    // Update is called once per frame
     void Update()
     {
         MoveAtMousePos();
         MoveMouseIndicator();
         UpdateMousePosition();
     }
+    #region MousePosition
     Ray CalculateMousePos()
     {
         return Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -36,40 +34,30 @@ public class PlayerController : MonoBehaviour
     void UpdateMousePosition()
     {
         
-        if(Physics.Raycast(CalculateMousePos(), out RaycastHit hitInfo))
+        if(Physics.Raycast(CalculateMousePos(), out RaycastHit hitInfo,Mathf.Infinity))
         {
             target = hitInfo.point;
             target.y = transform.position.y;
         }
     }
+    #endregion
+    #region Movement
     void MoveMouseIndicator()
     {
         mouseIndicator.position = target;  
-    }
-   public void AddToInventory(FishScriptableObject fishToAdd)
-    {
-        fished.Add(fishToAdd);
     }
     private void SmoothRotation(Vector3 target)
     {
         var direction = (target - transform.position);
         if(direction != Vector3.zero)
         {
-
         var rotDestiny = Quaternion.LookRotation(direction);
         transform.rotation = Quaternion.Slerp(transform.rotation,rotDestiny,rotationSpeed * Time.deltaTime);
         }
     }
     private void MoveAtMousePos()
     {
-  
         var distance = target - transform.position;
-        if (Input.GetMouseButton(1))
-        {
-            PointMovePosition();
-            canMove = true;
-            targetPoint = target;
-        }
         if (distance.magnitude < 0.05)
         {
             canMove = false;
@@ -80,17 +68,14 @@ public class PlayerController : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, targetPoint, speed * Time.deltaTime);
         }
     }
-    private void PointMovePosition()
+    #endregion
+    public void AddToInventory(FishScriptableObject fishToAdd)
     {
-        pointer.position = targetPoint;
-        pointer.gameObject.SetActive(true);
-        StartCoroutine(RippleEffect());
-
+        fished.Add(fishToAdd);
     }
-    IEnumerator RippleEffect()
+    private void MoveListener()
     {
-        yield return new WaitForSeconds(3f);
-        pointer.gameObject.SetActive(false);
-
+        canMove = true;
+        targetPoint = target;
     }
 }
