@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3729915492495837602}
   - component: {fileID: 7314847790921009949}
   - component: {fileID: 5175887140478503215}
-  - component: {fileID: 3529476217249036857}
   - component: {fileID: 803572145}
   - component: {fileID: 1308659016}
   - component: {fileID: 1308659012}
@@ -85,20 +84,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &3529476217249036857
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8304603662067793070}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8a8dce7a3e2a2f44b796a357ba20695, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  contactLayers: Fishes
-  isFishing: 0
 --- !u!65 &803572145
 BoxCollider:
   m_ObjectHideFlags: 0

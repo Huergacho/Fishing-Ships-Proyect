@@ -2,22 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-public class PlayerController : MonoBehaviour
+public class PlayerController : BaseActor
 {
-    [SerializeField] private float speed;
-    [SerializeField] private Vector3 direction;
     [SerializeField] private Transform mouseIndicator;
+    [SerializeField] private LayerMask pointerContactLayers;
+    [SerializeField] private LayerMask fishLayerMask;
     private Vector3 target;
     [SerializeField] private List<FishScriptableObject> fished = new List<FishScriptableObject>();
-
     [SerializeField]private float rotationSpeed;
-    [SerializeField] private float radius;
-    private bool canMove;
     private Vector3 targetPoint;
-
-    void Start()
+    public static PlayerController instance;
+    public Action<FishPond> OnPondDetection;
+    [SerializeField] private float distanceToFish;
+    private bool wantToInteract;
+    private void Awake()
     {
+        instance = this;
+    }
+
+    protected override void Start()
+    {
+        base.Start();
         InputController.inputControllerInstance.pointEvent += MoveListener;
+        InputController.inputControllerInstance.interactEvent += DetectFishPond;
         GameManager.instance.player = this;
     }
     void Update()
@@ -25,6 +32,10 @@ public class PlayerController : MonoBehaviour
         MoveAtMousePos();
         MoveMouseIndicator();
         UpdateMousePosition();
+        if (wantToInteract)
+        {
+            DetectFishPond();
+        }
     }
     #region MousePosition
     Ray CalculateMousePos()
@@ -34,7 +45,7 @@ public class PlayerController : MonoBehaviour
     void UpdateMousePosition()
     {
         
-        if(Physics.Raycast(CalculateMousePos(), out RaycastHit hitInfo,Mathf.Infinity))
+        if(Physics.Raycast(CalculateMousePos(), out RaycastHit hitInfo,Mathf.Infinity,pointerContactLayers))
         {
             target = hitInfo.point;
             target.y = transform.position.y;
@@ -77,5 +88,26 @@ public class PlayerController : MonoBehaviour
     {
         canMove = true;
         targetPoint = target;
+    }
+    private void DetectFishPond()
+    {
+
+            var hit = Physics.SphereCastAll(mouseIndicator.position, 10f, mouseIndicator.position, 3f, fishLayerMask);
+            var distance = Vector3.Distance(transform.position, mouseIndicator.position);
+            if (distance <= distanceToFish)
+             {
+            wantToInteract = false;
+                foreach (var item in hit)
+                {
+                    var fishItem = item.collider.gameObject.GetComponent<FishPond>();
+                    OnPondDetection(fishItem);
+                    return;
+                }
+            }
+            else
+            {
+                wantToInteract = true;
+            MoveAtMousePos();
+            }
     }
 }

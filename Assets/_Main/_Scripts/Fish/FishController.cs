@@ -4,27 +4,62 @@ using UnityEngine;
 
 public class FishController : MonoBehaviour
 {
-    [SerializeField]private PlayerController target;
-    [SerializeField]private List<FishScriptableObject> fishes = new List<FishScriptableObject>();
-    [SerializeField] private string contactLayers;
-    [SerializeField] private int fishQuantity;
-    [SerializeField] private int maxFishes;
+    private PlayerController target;
+    [SerializeField] private FishPond fishPondPrefab;
+    [SerializeField] private List<FishPond> fishPonds = new List<FishPond>();
+    [SerializeField] private int quantityOfPonds;
+    private FishPond actualFishPond;
+    [SerializeField] private float spawnRatio;
+    public static FishController Instance;
+    [SerializeField] private GameObject fishingMinigame;
+    private void Awake()
+    {
+        Instance = this;
+    }
     private void Start()
     {
-        fishQuantity = Random.Range(1, maxFishes);
         target = GameManager.instance.player;
+        target.OnPondDetection += AssignFishPond;
+        for (int i = 0; i < quantityOfPonds; i++)
+        {
+            var pondClone = Instantiate(fishPondPrefab, new Vector3(target.transform.position.x * Random.insideUnitCircle.x + Random.Range(1,spawnRatio), target.transform.position.y, target.transform.position.z * Random.insideUnitCircle.y + Random.Range(1, spawnRatio)), Quaternion.identity);
+            fishPonds.Add(pondClone);
+        }
+     
     }
     private void Update()
     {
-        if(fishQuantity <= 0)
+        
+        if(actualFishPond != null && actualFishPond.GetActualFishes() <= 0)
         {
-            Destroy(gameObject);
+            End();
         }
+    }
+    public void AssignFishPond(FishPond fishPond)
+    {
+        actualFishPond = fishPond;
+        fishingMinigame.transform.localPosition = new Vector3(actualFishPond.transform.position.x, actualFishPond.transform.position.y, actualFishPond.transform.position.z);
+        StartMinigame();
+    }
+    public FishPond GetActualFishPond()
+    {
+        return actualFishPond;
     }
     public void GetFish()
     {
-        var fishToGet = Random.Range(0, fishes.Count);
-        target.AddToInventory(fishes[fishToGet]);
-        fishQuantity--;
+        var fishObtained = Random.Range(0, actualFishPond.fishes.Count);
+        target.AddToInventory(actualFishPond.fishes[fishObtained]);
+        actualFishPond.TakeFishes();
+    }
+    public void End()
+    {
+        actualFishPond.gameObject.SetActive(false);
+        fishingMinigame.SetActive(false);
+        actualFishPond = null;
+    }
+    private void StartMinigame()
+    {
+        fishingMinigame.GetComponent<ProbabilitySquare>().Initialize();
+        fishingMinigame.SetActive(true);
     }
 }

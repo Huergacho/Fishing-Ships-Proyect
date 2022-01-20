@@ -5,6 +5,7 @@ using System;
 public class InputController : MonoBehaviour
 {
     public Action pointEvent;
+    public Action interactEvent;
     public static InputController inputControllerInstance;
     private void Awake()
     {
@@ -31,6 +32,10 @@ public class InputController : MonoBehaviour
         if (Input.GetMouseButton(1))
         {
             pointEvent.Invoke();
+        }
+        if (Input.GetMouseButtonDown(0))
+        {
+            interactEvent.Invoke();
         }
     }
 }

@@ -493,13 +493,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53eb6eccb438e54458f5230db9049cbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
-  direction: {x: 0, y: 0, z: 0}
+  actorStats: {fileID: 11400000, guid: e9872980cdcb66a4b84a7730b55802c1, type: 2}
+  speed: 0
+  health: 0
+  canMove: 0
   mouseIndicator: {fileID: 0}
+  pointerContactLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  fishLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
   fished: []
   rotationSpeed: 1
-  radius: 15
-  pointer: {fileID: 0}
 --- !u!54 &5883691648840790442
 Rigidbody:
   m_ObjectHideFlags: 0

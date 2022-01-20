@@ -5,7 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Actor",menuName ="BaseActor",order = 1)]
 public class ActorStats : ScriptableObject
 {
-    [SerializeField] private float speed;
     [SerializeField] private float maxHealth;
+    public float MaxHealth => maxHealth;
     [SerializeField] private float maxSpeed;
+    public float MaxSpeed => maxSpeed;
 }
