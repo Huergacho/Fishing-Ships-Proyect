@@ -30,10 +30,8 @@ public class FishController : MonoBehaviour
     private void Update()
     {
         
-        if(actualFishPond != null && actualFishPond.GetActualFishes() <= 0)
-        {
-            End();
-        }
+
+
     }
     public void AssignFishPond(FishPond fishPond)
     {
@@ -50,6 +48,15 @@ public class FishController : MonoBehaviour
         var fishObtained = Random.Range(0, actualFishPond.fishes.Count);
         target.AddToInventory(actualFishPond.fishes[fishObtained]);
         actualFishPond.TakeFishes();
+        if (actualFishPond != null && actualFishPond.GetActualFishes() <= 0)
+        {
+            End();
+        }
+        if (actualFishPond != null && actualFishPond.GetActualFishes() > 0)
+        {
+            fishingMinigame.GetComponent<ProbabilitySquare>().Initialize();
+        }
+
     }
     public void End()
     {

@@ -96,7 +96,7 @@ public class PlayerController : BaseActor
             var distance = Vector3.Distance(transform.position, mouseIndicator.position);
             if (distance <= distanceToFish)
              {
-            wantToInteract = false;
+                wantToInteract = false;
                 foreach (var item in hit)
                 {
                     var fishItem = item.collider.gameObject.GetComponent<FishPond>();
@@ -107,7 +107,7 @@ public class PlayerController : BaseActor
             else
             {
                 wantToInteract = true;
-            MoveAtMousePos();
+                MoveAtMousePos();
             }
     }
 }
