@@ -6,7 +6,6 @@ public class ProbabilitySquare : MonoBehaviour
 {
     [SerializeField] private Transform[] barriers;
     [SerializeField] private GameObject indicator;
-    [SerializeField] private float lerpSpeed;
     private void Start()
     {
         gameObject.SetActive(false);
@@ -20,10 +19,6 @@ public class ProbabilitySquare : MonoBehaviour
     }
     private void Update()
     {
-        
+        transform.LookAt(Camera.main.transform);
     }
-    //public void DeleteSquare(GameObject indicatorToDelete)
-    //{
-    //    indicatorToDelete.SetActive(false);
-    //}
 }

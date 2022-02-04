@@ -9,7 +9,7 @@ public class Pointer : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
-        InputController.inputControllerInstance.pointEvent += Point;
+        //InputController.OnPoint += Point;
     }
 
     // Update is called once per frame

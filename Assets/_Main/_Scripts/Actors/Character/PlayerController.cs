@@ -23,8 +23,8 @@ public class PlayerController : BaseActor
     protected override void Start()
     {
         base.Start();
-        InputController.inputControllerInstance.pointEvent += MoveListener;
-        InputController.inputControllerInstance.interactEvent += DetectFishPond;
+        //InputController.inputControllerInstance.pointEvent += MoveListener;
+        //InputController.inputControllerInstance.interactEvent += DetectFishPond;
         GameManager.instance.player = this;
     }
     void Update()
@@ -68,16 +68,9 @@ public class PlayerController : BaseActor
     }
     private void MoveAtMousePos()
     {
-        var distance = target - transform.position;
-        if (distance.magnitude < 0.05)
-        {
-            canMove = false;
-        }
-        if (canMove)
-        {    
             SmoothRotation(targetPoint);
             transform.position = Vector3.MoveTowards(transform.position, targetPoint, speed * Time.deltaTime);
-        }
+       
     }
     #endregion
     public void AddToInventory(FishScriptableObject fishToAdd)
@@ -86,7 +79,6 @@ public class PlayerController : BaseActor
     }
     private void MoveListener()
     {
-        canMove = true;
         targetPoint = target;
     }
     private void DetectFishPond()

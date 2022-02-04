@@ -4,21 +4,11 @@ using UnityEngine;
 using System;
 public class InputController : MonoBehaviour
 {
-    public Action pointEvent;
-    public Action interactEvent;
-    public static InputController inputControllerInstance;
-    private void Awake()
-    {
-        if (inputControllerInstance == null)
-        {
-            inputControllerInstance = this;
-        }
-        else
-        {
-            Destroy(inputControllerInstance.gameObject);
-            inputControllerInstance = this;
-        }
-    }
+    private bool _isMoving;
+    private bool _isInteracting;
+    [SerializeField] private Transform mouseIndicator;
+    [SerializeField] private LayerMask pointerContactLayers;
+    //public event Action<bool> isMoving;
     private void Start()
     {
 
@@ -31,11 +21,39 @@ public class InputController : MonoBehaviour
     {
         if (Input.GetMouseButton(1))
         {
-            pointEvent.Invoke();
+            _isMoving = true;
+        }
+        else
+        {
+            _isMoving = false;
         }
         if (Input.GetMouseButtonDown(0))
         {
-            interactEvent.Invoke();
+            _isInteracting = true;
+        }
+        else
+        {
+            _isInteracting = false;
+        }
+    }
+
+
+    Ray CalculateMousePos()
+    {
+        return Camera.main.ScreenPointToRay(Input.mousePosition);
+    }
+    Vector3 UpdateMousePosition()
+    {
+
+        if (Physics.Raycast(CalculateMousePos(), out RaycastHit hitInfo, Mathf.Infinity, pointerContactLayers))
+        {
+            mouseIndicator.position = hitInfo.point;
+            mouseIndicator.position = Vector3.up * transform.position.y;
+            return mouseIndicator.position;
+        }
+        else
+        {
+            return Vector3.zero;
         }
     }
 }

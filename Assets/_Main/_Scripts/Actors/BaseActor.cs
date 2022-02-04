@@ -5,9 +5,8 @@ using UnityEngine;
 public class BaseActor : MonoBehaviour
 {
     [SerializeField] protected ActorStats actorStats;
-    [SerializeField] protected float speed;
+    protected float speed;
     [SerializeField] protected float health;
-    [SerializeField] protected bool canMove;
 
     protected virtual void Start()
     {

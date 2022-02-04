@@ -407,6 +407,7 @@ GameObject:
   - component: {fileID: 6699806519067816528}
   - component: {fileID: 5883691648840790442}
   - component: {fileID: 478344143}
+  - component: {fileID: 3590098972016102131}
   m_Layer: 6
   m_Name: MainShip
   m_TagString: Untagged
@@ -506,6 +507,7 @@ MonoBehaviour:
     m_Bits: 0
   fished: []
   rotationSpeed: 1
+  distanceToFish: 0
 --- !u!54 &5883691648840790442
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -535,6 +537,28 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.020094631, y: 0.009770456, z: 0.045226663}
   m_Center: {x: 0.0005458662, y: 0.0027400628, z: -0.00056943897}
+--- !u!114 &3590098972016102131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5865634488544406771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27cfad9453ccb6747befa11e11dcb832, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rotationSpeed: 0
+  _mouseIndicator: {fileID: 0}
+  _pointerContactLayers:
+    serializedVersion: 2
+    m_Bits: 16
+  _fishLayerMask:
+    serializedVersion: 2
+    m_Bits: 128
+  _fished: []
+  _distanceToFish: 10
 --- !u!1 &6209304041071518662
 GameObject:
   m_ObjectHideFlags: 0

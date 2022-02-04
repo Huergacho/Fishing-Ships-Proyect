@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Player
   m_EditorClassIdentifier: 
   maxHealth: 100
-  maxSpeed: 3
+  maxSpeed: 10
+  rotSpeed: 10

@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using Random = UnityEngine.Random;
 
 public class FishController : MonoBehaviour
 {
@@ -12,6 +14,8 @@ public class FishController : MonoBehaviour
     [SerializeField] private float spawnRatio;
     public static FishController Instance;
     [SerializeField] private GameObject fishingMinigame;
+    public static Action<bool> IsMinigameRunning;
+
     private void Awake()
     {
         Instance = this;
@@ -26,12 +30,6 @@ public class FishController : MonoBehaviour
             fishPonds.Add(pondClone);
         }
      
-    }
-    private void Update()
-    {
-        
-
-
     }
     public void AssignFishPond(FishPond fishPond)
     {
@@ -60,13 +58,22 @@ public class FishController : MonoBehaviour
     }
     public void End()
     {
-        actualFishPond.gameObject.SetActive(false);
-        fishingMinigame.SetActive(false);
-        actualFishPond = null;
+  
+       StartCoroutine(EndActions());
     }
     private void StartMinigame()
     {
+        IsMinigameRunning?.Invoke(true);
         fishingMinigame.GetComponent<ProbabilitySquare>().Initialize();
         fishingMinigame.SetActive(true);
+    }
+    IEnumerator EndActions()
+    {
+       yield return new WaitForSeconds(2f);
+        actualFishPond.gameObject.SetActive(false);
+        fishingMinigame.SetActive(false);
+        actualFishPond = null;
+        IsMinigameRunning?.Invoke(false);
+        StopCoroutine(EndActions());
     }
 }
