@@ -26,7 +26,6 @@ public class FSM<T>
     }
     public void Transition(T stateToTransit)
     {
-        Debug.Log(stateToTransit);
         IState<T> newState = _currentState.GetTransition(stateToTransit);
         if(newState != null)
         {

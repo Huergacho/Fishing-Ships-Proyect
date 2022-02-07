@@ -317,9 +317,6 @@ MonoBehaviour:
   actorStats: {fileID: 11400000, guid: e9872980cdcb66a4b84a7730b55802c1, type: 2}
   health: 0
   mouseIndicator: {fileID: 803572149}
-  pointerContactLayers:
-    serializedVersion: 2
-    m_Bits: 16
 --- !u!114 &783623620
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -429,6 +426,10 @@ PrefabInstance:
     - target: {fileID: 803572145, guid: 2adb8eb7bde487d4a9a739cd48dbe493, type: 3}
       propertyPath: m_Center.y
       value: -0.041245744
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308659012, guid: 2adb8eb7bde487d4a9a739cd48dbe493, type: 3}
+      propertyPath: contactLayers.m_Bits
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 3729915492495837602, guid: 2adb8eb7bde487d4a9a739cd48dbe493, type: 3}
       propertyPath: m_RootOrder

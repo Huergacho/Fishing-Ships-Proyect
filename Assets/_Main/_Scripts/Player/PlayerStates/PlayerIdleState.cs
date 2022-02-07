@@ -23,11 +23,8 @@ class PlayerIdleState<T> : State<T>
         //    _parentFsm.Transition(_interactInput);
         //    return;
         //}
-        //  _playerInputs.UpdateInputs();
-        Debug.Log(_playerInputs.IsMoving());
         if (_playerInputs.IsMoving())
         {
-            Debug.Log("AAAAH TRANSICIONA MIERDA");
             _parentFsm.Transition(_moveInput);
             return;
         }

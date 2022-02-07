@@ -15,14 +15,8 @@ public class PlayerSailState<T> : State<T>
       //  _interactInput = interactInput;
         _playerInputs = playerInputs;
     }
-    public override void Awake()
-    {
-        Debug.Log("SAILING");
-    }
     public override void Execute()
     {
-        //_playerInputs.UpdateInputs();
-        Debug.Log("Sail State"+_playerInputs.IsMoving());
         if (!_playerInputs.IsMoving())
         {
             _parentFsm.Transition(_idleInput);

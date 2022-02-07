@@ -23,7 +23,6 @@ public class PlayerInputs : MonoBehaviour, Iinput
     }
     public void UpdateInputs()
     {
-        Debug.Log(IsMoving());
         IsMoving();
         isInteracting();
     }

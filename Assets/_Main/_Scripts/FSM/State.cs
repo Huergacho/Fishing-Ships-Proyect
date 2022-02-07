@@ -24,7 +24,7 @@ public class State<T> : IState<T>
 
     public void AddTransition(T input, IState<T> transitionToAdd)
     {
-        if (_transitions.ContainsKey(input))
+        if (!_transitions.ContainsKey(input))
         {
             _transitions[input] = transitionToAdd;
         }
