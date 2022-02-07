@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
-
+using System;
 public class FSM<T>
 {
     private IState<T> _currentState;
@@ -26,6 +26,7 @@ public class FSM<T>
     }
     public void Transition(T stateToTransit)
     {
+        Debug.Log(stateToTransit);
         IState<T> newState = _currentState.GetTransition(stateToTransit);
         if(newState != null)
         {

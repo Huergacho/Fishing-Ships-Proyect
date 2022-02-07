@@ -13,16 +13,17 @@ public class PlayerInputs : MonoBehaviour, Iinput
 
     public bool IsMoving()
     {
-        print("Boton de mov");
-        return Input.GetMouseButtonDown(1);
+        
+        return Input.GetMouseButton(1);
 
     }
     public bool isInteracting()
     {
-        return Input.GetMouseButtonDown(0);
+        return Input.GetMouseButton(0);
     }
     public void UpdateInputs()
     {
+        Debug.Log(IsMoving());
         IsMoving();
         isInteracting();
     }

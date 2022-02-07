@@ -26,12 +26,11 @@ public class PlayerModel : BaseActor
     }
     public void Idle()
     {
-        MoveMousePos();
-
+        //MoveMousePos();
     }
     public void Move()
     {
-        Debug.Log("MOving");
+        Debug.Log("Me muevo");
         MoveMousePos();
         MoveAtMousePos();
     }
@@ -71,7 +70,7 @@ public class PlayerModel : BaseActor
     private void MoveAtMousePos()
     {
        
-        SmoothRotation(mouseIndicator.position);
+        //SmoothRotation(mouseIndicator.position);
         transform.position = Vector3.MoveTowards(transform.position, mouseIndicator.position, speed * Time.deltaTime);
 
        

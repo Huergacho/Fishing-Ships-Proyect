@@ -26,13 +26,15 @@ public class PlayerStateMachine : MonoBehaviour
     }
     private void OnIdleCommand()
     {
+        Debug.Log("Idle"); 
             onIdle?.Invoke();
     }
     private void FsmInit()
     {
-        var idle = new PlayerIdleState<PlayerStates>(OnIdleCommand, PlayerStates.Sailing, PlayerStates.Interact, _playerInputs);
-        var sail = new PlayerSailState<PlayerStates>(OnMoveCommand, PlayerStates.Idle, PlayerStates.Interact, _playerInputs);
-
+        //var idle = new playeridlestate<playerstates>(onidlecommand, playerstates.sailing, playerstates.interact, _playerinputs);
+        //var sail = new playersailstate<playerstates>(onmovecommand, playerstates.idle, playerstates.interact, _playerinputs);
+        var idle = new PlayerIdleState<PlayerStates>(OnIdleCommand, PlayerStates.Sailing ,_playerInputs);
+        var sail = new PlayerSailState<PlayerStates>(OnMoveCommand, PlayerStates.Idle, _playerInputs);
 
         //idle 
         idle.AddTransition(PlayerStates.Sailing, sail);
