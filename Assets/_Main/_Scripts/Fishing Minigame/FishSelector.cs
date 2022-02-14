@@ -1,63 +1,81 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class FishSelector : MonoBehaviour
 {
     [SerializeField] private LayerMask fishLayers;
-    [SerializeField] private Transform upBarrier;
-    [SerializeField] private Transform bottomBarrier;
+    [SerializeField] private Transform[] barriers;
     [SerializeField] private float lerpTime;
-    [SerializeField] private SpriteRenderer detectionLine;
-    private bool hasFinished;
-
+    [SerializeField] private Image detectionLine;
+    [SerializeField] private float detectionDistance;
+    private bool hasStarted;
+    [SerializeField] private GameObject pez;
+    [SerializeField]private Color[] colorBucket = new Color[3];
     private void Start()
     {
-        FishController.IsMinigameRunning += MinigameEnd;
+        FishMinigameController.Instance.IsMinigameRunning += ActionsInMinigame;
+        hasStarted = true;
     }
     private void Update()
     {
-        if(hasFinished == true)
+        if (!hasStarted)
         {
-        ActionsInMinigame();
-        }
-    }
-
-    void DetectFishes()
-    {
-
-            RaycastHit hit;
-        if (Physics.Raycast(transform.position, -transform.TransformDirection(Vector3.right), out hit, 3f, fishLayers))
-        {
-            FishController.Instance.GetFish();
-            //Mat Verde
-            detectionLine.color = new Color(0, 1, 0);
+            return;
         }
         else
         {
-            FishController.Instance.End();
-            detectionLine.color = new Color(1, 0, 0);
-            hasFinished = true;
-            //Mat Rojo
+            CheckForFishInLine();
+            PingPong();
+        }
+    }
+
+    void CheckForFishInLine()
+    {
+        var distance = Vector3.Distance(transform.position, pez.transform.position);
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (distance <= detectionDistance)
+            {
+                detectionLine.color = colorBucket[1];
+                FishMinigameController.Instance.Fish();
+            }
+
+            else
+            {
+                detectionLine.color = colorBucket[2];
+                FishMinigameController.Instance.OnEnd();
+            }
         }
     }
 
     void PingPong()
     {
-             var dist = Vector3.Distance(upBarrier.localPosition, bottomBarrier.localPosition);
-            transform.localPosition = new Vector3(transform.localPosition.x,Mathf.PingPong(Time.time * lerpTime / 2, dist) - dist / 2f, transform.localPosition.z);
+        var dist = Vector3.Distance(barriers[0].localPosition, barriers[1].localPosition);
+        transform.localPosition = new Vector3(transform.localPosition.x, Mathf.PingPong(Time.time * lerpTime / 2, dist) - dist / 2f, transform.localPosition.z);
     }
-    void ActionsInMinigame()
+
+    void ActionsInMinigame(bool isMinigameRunning)
     {
-            detectionLine.color = new Color(1, 1, 0.5f);
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                DetectFishes();
-            }
-        PingPong();
+        if (isMinigameRunning)
+        {
+            Initialize();
+        }
+        else
+        {
+            OnEnd();
+        }
+
     }
-    void MinigameEnd(bool minigameState)
+    void Initialize()
     {
-        hasFinished = minigameState;
+        detectionLine.color = colorBucket[0];
+        hasStarted = true;
     }
+    void OnEnd()
+    {
+        hasStarted = false;
+        
+    }
+
 }

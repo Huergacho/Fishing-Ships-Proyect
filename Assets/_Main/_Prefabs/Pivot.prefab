@@ -404,10 +404,11 @@ GameObject:
   - component: {fileID: 6497915610449081929}
   - component: {fileID: 7891116082910951916}
   - component: {fileID: 5360997752397860134}
-  - component: {fileID: 6699806519067816528}
   - component: {fileID: 5883691648840790442}
   - component: {fileID: 478344143}
-  - component: {fileID: 3590098972016102131}
+  - component: {fileID: 783623619}
+  - component: {fileID: 783623620}
+  - component: {fileID: 783623626}
   m_Layer: 6
   m_Name: MainShip
   m_TagString: Untagged
@@ -482,32 +483,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &6699806519067816528
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5865634488544406771}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53eb6eccb438e54458f5230db9049cbc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  actorStats: {fileID: 11400000, guid: e9872980cdcb66a4b84a7730b55802c1, type: 2}
-  speed: 0
-  health: 0
-  canMove: 0
-  mouseIndicator: {fileID: 0}
-  pointerContactLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  fishLayerMask:
-    serializedVersion: 2
-    m_Bits: 0
-  fished: []
-  rotationSpeed: 1
-  distanceToFish: 0
 --- !u!54 &5883691648840790442
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -537,7 +512,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.020094631, y: 0.009770456, z: 0.045226663}
   m_Center: {x: 0.0005458662, y: 0.0027400628, z: -0.00056943897}
---- !u!114 &3590098972016102131
+--- !u!114 &783623619
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -546,19 +521,44 @@ MonoBehaviour:
   m_GameObject: {fileID: 5865634488544406771}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27cfad9453ccb6747befa11e11dcb832, type: 3}
+  m_Script: {fileID: 11500000, guid: 0fa663e41ee52264d9d95de32bb86945, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotationSpeed: 0
-  _mouseIndicator: {fileID: 0}
-  _pointerContactLayers:
+  actorStats: {fileID: 11400000, guid: e9872980cdcb66a4b84a7730b55802c1, type: 2}
+  health: 0
+  mouseIndicator: {fileID: 0}
+  distanceToFish: 10
+  fishes: []
+--- !u!114 &783623620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5865634488544406771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfd32f73eb0ea1845b8e27b659e37449, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &783623626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5865634488544406771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04e040b8472b73c44ae535320bd11584, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  contactLayers:
     serializedVersion: 2
     m_Bits: 16
-  _fishLayerMask:
+  fishLayerMask:
     serializedVersion: 2
     m_Bits: 128
-  _fished: []
-  _distanceToFish: 10
 --- !u!1 &6209304041071518662
 GameObject:
   m_ObjectHideFlags: 0

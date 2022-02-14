@@ -2,23 +2,41 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProbabilitySquare : MonoBehaviour
+public class ProbabilitySquare : MonoBehaviour,IFishMinigame
 {
     [SerializeField] private Transform[] barriers;
     [SerializeField] private GameObject indicator;
     private void Start()
     {
-        gameObject.SetActive(false);
+        SuscribeEvents();
+
     }
     public void Initialize()
     {
-        float spawn = Random.Range(barriers[0].localPosition.y, barriers[barriers.Length - 1].localPosition.y);
-        indicator.transform.position = new Vector3(indicator.transform.position.x, spawn, indicator.transform.position.z);
-        indicator.SetActive(true);
-
+        float spawn = Random.Range(barriers[0].transform.localPosition.y, barriers[1].transform.localPosition.y);
+        transform.localPosition = new Vector3(transform.localPosition.x, spawn, transform.localPosition.z);
     }
-    private void Update()
+    private void SuscribeEvents()
     {
-        transform.LookAt(Camera.main.transform);
+        FishMinigameController.Instance.IsMinigameRunning += ActionsInMinigame;
+        FishMinigameController.Instance.OnMinigameRestart += Initialize;
     }
+    public void ActionsInMinigame(bool isMinigameRunning)
+    {
+        if (isMinigameRunning)
+        {
+            Initialize();
+            return;
+        }
+        else
+        {
+            OnEnd();
+            return;
+        }
+        
+    }
+    public void OnEnd()
+    {
+    }
+
 }

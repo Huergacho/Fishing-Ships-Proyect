@@ -8,21 +8,21 @@ class PlayerIdleState<T> : State<T>
     private PlayerInputs _playerInputs;
     private Action _onIdle;
   // public PlayerIdleState(Action onIdle,T moveInput, T interactInput,PlayerInputs playerInputs)
-    public PlayerIdleState(Action onIdle,T moveInput, PlayerInputs playerInputs)
+    public PlayerIdleState(Action onIdle,T moveInput,T interactInput, PlayerInputs playerInputs)
     {
         _onIdle = onIdle;
         _moveInput = moveInput;
-       // _interactInput = interactInput;
+        _interactInput = interactInput;
         _playerInputs = playerInputs;
     }
 
     public override void Execute()
     {
-        //if (_playerInputs.isInteracting())
-        //{
-        //    _parentFsm.Transition(_interactInput);
-        //    return;
-        //}
+        if (_playerInputs.isInteracting())
+        {
+            _parentFsm.Transition(_interactInput);
+            return;
+        }
         if (_playerInputs.IsMoving())
         {
             _parentFsm.Transition(_moveInput);

@@ -5,6 +5,7 @@ public enum PlayerStates
 {
     Idle,
     Sailing,
-    Interact
+    Interact,
+    Fishing
 
 }

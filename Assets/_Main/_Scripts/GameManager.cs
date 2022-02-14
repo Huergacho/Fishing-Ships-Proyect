@@ -5,7 +5,7 @@ using System;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-    public PlayerController player;
+    public PlayerModel player;
     private void Awake()
     {
         if(instance == null)
