@@ -11,8 +11,9 @@ public class PlayerModel : BaseActor
     [SerializeField]private int maxFishes;
     public float DistanceToFish => distanceToFish;
     private Rigidbody _rb;
-    private FishPond actualFishItem;
+    //private FishPond actualFishItem;
     public event Action<FishPond> OnPondAssign;
+    [SerializeField] private int actualMoney;
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
@@ -20,7 +21,7 @@ public class PlayerModel : BaseActor
     protected override void Start()
     {
         GameManager.instance.player = this;
-        HudManager.Instance.FishCounter.UpdateFishesCount(actualFishes, maxFishes);
+        InitializeHud();
         base.Start();
     }
     public void SuscribeEvents(PlayerStateMachine controller)
@@ -29,6 +30,7 @@ public class PlayerModel : BaseActor
         controller.onIdle += Idle;
         controller.onFish += Fish;
         controller.onMovePointer += MovePointer;
+        HudManager.Instance.PierShop.OnSell += AddMoney;
     }
     public void Idle()
     {
@@ -68,6 +70,19 @@ public class PlayerModel : BaseActor
         fishes.Add(fishToAdd);
         actualFishes++;
         HudManager.Instance.FishCounter.UpdateFishesCount(actualFishes,maxFishes);
+    }
+    private void AddMoney(int moneyToAdd)
+    {
+        if(actualFishes != 0)
+        {
+            actualMoney += moneyToAdd;
+            HudManager.Instance.PierShop.UpdateMoneyCount(actualMoney);
+        }
+    }
+    private void InitializeHud()
+    {
+        HudManager.Instance.FishCounter.UpdateFishesCount(actualFishes, maxFishes);
+        HudManager.Instance.PierShop.UpdateMoneyCount(actualMoney);
     }
     #endregion
 

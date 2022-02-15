@@ -5,6 +5,11 @@ public class PlayerInputs : MonoBehaviour, Iinput
 {
     [SerializeField] private LayerMask contactLayers;
     [SerializeField] private LayerMask fishLayerMask;
+    public bool isOnMenue { get; private set;}
+    private void Start()
+    {
+        HudManager.Instance.isOnMenue += SetMenueState;
+    }
     public bool IsMoving()
     {
         
@@ -17,8 +22,10 @@ public class PlayerInputs : MonoBehaviour, Iinput
     }
     public void UpdateInputs()
     {
-        IsMoving();
-        isInteracting();
+    }
+    private void SetMenueState(bool state)
+    {
+        isOnMenue = state;
     }
     public FishPond DetectFishPond(Vector3 mousePos, float distanceToFish)
     {

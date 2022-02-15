@@ -6,6 +6,7 @@ public enum PlayerStates
     Idle,
     Sailing,
     Interact,
-    Fishing
+    Fishing,
+    OnMenue
 
 }
