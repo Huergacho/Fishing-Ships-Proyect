@@ -10,7 +10,7 @@ public class PierShop : MonoBehaviour
     [SerializeField] private Button sellFishesButton;
     [SerializeField] private Button exitMenueButton;
     [SerializeField] private TextMeshProUGUI moneyCount;
-    public event Action<int> OnSell;
+    public event Action<int,int> OnSell;
     private void Start()
     {
         sellFishesButton.onClick.AddListener(SellFishes);
@@ -23,7 +23,7 @@ public class PierShop : MonoBehaviour
     }
     public void SellFishes()
     {
-        OnSell?.Invoke(shopStats.SellItemValue);
+        OnSell?.Invoke(shopStats.SellItemValue,shopStats.SellItemQuantity);
     }
     public void UpdateMoneyCount(int actualMoney)
     {

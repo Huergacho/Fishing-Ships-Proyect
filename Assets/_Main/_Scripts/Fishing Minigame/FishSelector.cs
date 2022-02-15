@@ -11,9 +11,11 @@ public class FishSelector : MonoBehaviour
     [SerializeField] private float detectionDistance;
     private bool hasStarted;
     [SerializeField] private GameObject pez;
-    [SerializeField]private Color[] colorBucket = new Color[3];
+    //[SerializeField]private Color[] colorBucket = new Color[3];
+    private Animator _animator;
     private void Start()
     {
+        _animator = GetComponent<Animator>();
         FishMinigameController.Instance.IsMinigameRunning += ActionsInMinigame;
         hasStarted = true;
     }
@@ -37,13 +39,15 @@ public class FishSelector : MonoBehaviour
         {
             if (distance <= detectionDistance)
             {
-                detectionLine.color = colorBucket[1];
+                // detectionLine.color = colorBucket[1];
+                _animator.Play("Fish");
                 FishMinigameController.Instance.Fish();
             }
 
             else
             {
-                detectionLine.color = colorBucket[2];
+                //detectionLine.color = colorBucket[2];
+                _animator.Play("NoFish");
                 FishMinigameController.Instance.OnEnd();
             }
         }
@@ -69,7 +73,7 @@ public class FishSelector : MonoBehaviour
     }
     void Initialize()
     {
-        detectionLine.color = colorBucket[0];
+       // detectionLine.color = colorBucket[0];
         hasStarted = true;
     }
     void OnEnd()

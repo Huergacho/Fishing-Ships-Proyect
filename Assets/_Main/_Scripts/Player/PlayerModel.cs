@@ -6,7 +6,7 @@ public class PlayerModel : BaseActor
 {
     [SerializeField] private Transform mouseIndicator;
     [SerializeField] private float distanceToFish;
-    [SerializeField] private List<FishScriptableObject> fishes = new List<FishScriptableObject>();
+    //[SerializeField] private List<FishScriptableObject> fishes = new List<FishScriptableObject>();
     private int actualFishes = 0;
     [SerializeField]private int maxFishes;
     public float DistanceToFish => distanceToFish;
@@ -65,19 +65,27 @@ public class PlayerModel : BaseActor
     {
         mouseIndicator.position = target;
     }
-    public void AddToInventory(FishScriptableObject fishToAdd)
+    public void AddToInventory(int fishesToAdd)
     {
-        fishes.Add(fishToAdd);
-        actualFishes++;
+        //fishes.Add(fishToAdd);
+        actualFishes+= fishesToAdd;
         HudManager.Instance.FishCounter.UpdateFishesCount(actualFishes,maxFishes);
+        HudManager.Instance.FishCounter.AddFishes(fishesToAdd);
     }
-    private void AddMoney(int moneyToAdd)
+    private void AddMoney(int moneyToAdd,int fishesSelled)
     {
         if(actualFishes != 0)
         {
+            RemoveFishes(fishesSelled);
             actualMoney += moneyToAdd;
             HudManager.Instance.PierShop.UpdateMoneyCount(actualMoney);
         }
+    }
+    private void RemoveFishes(int fishesToRemove)
+    {
+        actualFishes -= fishesToRemove;
+        HudManager.Instance.FishCounter.UpdateFishesCount(actualFishes, maxFishes);
+        HudManager.Instance.FishCounter.RemoveFishes(fishesToRemove);
     }
     private void InitializeHud()
     {

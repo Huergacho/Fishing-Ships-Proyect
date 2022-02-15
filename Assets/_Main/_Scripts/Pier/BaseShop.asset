@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: BaseShop
   m_EditorClassIdentifier: 
   refillTime: 0
-  sellItemQuantity: 0
+  sellItemQuantity: 1
   sellItemValue: 1

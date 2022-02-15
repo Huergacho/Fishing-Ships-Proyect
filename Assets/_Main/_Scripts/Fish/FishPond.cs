@@ -7,7 +7,7 @@ public class FishPond : MonoBehaviour,IFishMinigame
     [SerializeField] private PondStats pondStats;
     [SerializeField] private int fishQuantity;
     private PlayerModel target;
-    [SerializeField] public  List<FishScriptableObject> fishes = new List<FishScriptableObject>();
+   // [SerializeField] public  List<FishScriptableObject> fishes = new List<FishScriptableObject>();
     public FishMinigameController Controller;
     private void Start()
     {
@@ -22,8 +22,8 @@ public class FishPond : MonoBehaviour,IFishMinigame
     }
     public void GetFish()
     {
-        var fishObtained = Random.Range(0, fishQuantity);
-        target.AddToInventory(fishes[fishObtained]);
+        var fishObtained = Random.Range(1, fishQuantity);
+        target.AddToInventory(fishObtained);
         TakeFishes();
         if (fishQuantity<= 0)
         {
