@@ -4,14 +4,11 @@ using UnityEngine;
 
 public class Pier : MonoBehaviour
 {
-    [SerializeField] private GameObject shopCanvas;
+    [SerializeField] private GameObject shopCanvas => HudManager.Instance.PierShop.gameObject;
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("AAAAAA");
         if (collision.gameObject.layer == GameManager.instance.player.gameObject.layer)
         {
-
-            Debug.Log("AAAAAA");
             shopCanvas.SetActive(true);
         }
     }
