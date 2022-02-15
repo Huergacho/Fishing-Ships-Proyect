@@ -26,7 +26,6 @@ public class PlayerInputs : MonoBehaviour, Iinput
         var hit = Physics.SphereCastAll(mousePos, 0.1f, mousePos, 3f, fishLayerMask);
         var distance = Vector3.Distance(transform.position, mousePos);
         FishPond actualFishPond;
-        //Hacer en Model
         if (distance <= distanceToFish && hit.Length > 0)
         {
             foreach (var item in hit)

@@ -34,7 +34,7 @@ public class PondController : MonoBehaviour, IFishMinigame
         for (int i = 0; i < quantityOfPonds; i++)
         {
             var pondClone = Instantiate(fishPondPrefab, new Vector3(GenerateFishes().x, _target.transform.position.y, GenerateFishes().z), Quaternion.identity);
-            pondClone.Controller = FishMinigameController.Instance;
+            pondClone.Controller = _controller;
             fishPonds.Add(pondClone);
         }
     }
@@ -42,7 +42,7 @@ public class PondController : MonoBehaviour, IFishMinigame
     {
         FishMinigameController.Instance.IsMinigameRunning += ActionsInMinigame;
         FishMinigameController.Instance.OnFish += GetFishesFromPond;
-        GameManager.instance.player.OnPondAssign += AssignFishPond;
+        FishMinigameController.Instance.Player.OnPondAssign += AssignFishPond;
     }
     #endregion
 
@@ -82,8 +82,10 @@ public class PondController : MonoBehaviour, IFishMinigame
         {
             return 0;
         }
-        
-        
+    }
+    public void AssignFishController(FishMinigameController controller)
+    {
+        _controller = controller;
     }
     public void ActionsInMinigame(bool isMinigameRunning)
     {

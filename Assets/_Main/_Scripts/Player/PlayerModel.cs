@@ -7,6 +7,8 @@ public class PlayerModel : BaseActor
     [SerializeField] private Transform mouseIndicator;
     [SerializeField] private float distanceToFish;
     [SerializeField] private List<FishScriptableObject> fishes = new List<FishScriptableObject>();
+    private int actualFishes = 0;
+    [SerializeField]private int maxFishes;
     public float DistanceToFish => distanceToFish;
     private Rigidbody _rb;
     private FishPond actualFishItem;
@@ -18,6 +20,7 @@ public class PlayerModel : BaseActor
     protected override void Start()
     {
         GameManager.instance.player = this;
+        HudManager.Instance.FishCounter.UpdateFishesCount(actualFishes, maxFishes);
         base.Start();
     }
     public void SuscribeEvents(PlayerStateMachine controller)
@@ -63,6 +66,8 @@ public class PlayerModel : BaseActor
     public void AddToInventory(FishScriptableObject fishToAdd)
     {
         fishes.Add(fishToAdd);
+        actualFishes++;
+        HudManager.Instance.FishCounter.UpdateFishesCount(actualFishes,maxFishes);
     }
     #endregion
 

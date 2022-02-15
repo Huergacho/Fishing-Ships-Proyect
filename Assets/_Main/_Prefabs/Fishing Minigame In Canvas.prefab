@@ -53,7 +53,7 @@ MonoBehaviour:
   barriers:
   - {fileID: 4828796072472183672}
   - {fileID: 4828796072042897739}
-  lerpTime: 300
+  lerpTime: 400
   detectionLine: {fileID: 7598487394591770471}
   detectionDistance: 17
   pez: {fileID: 4404014662509459464}
@@ -239,7 +239,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8467131762603636498
 Transform:
   m_ObjectHideFlags: 0

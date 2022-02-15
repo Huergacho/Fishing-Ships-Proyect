@@ -20,6 +20,7 @@ public class FishMinigameController : MonoBehaviour, IFishMinigame
     private void Awake()
     {
         Instance = this;
+        
     }
     private void Start()
     {
@@ -38,6 +39,7 @@ public class FishMinigameController : MonoBehaviour, IFishMinigame
         if (isAlreadyFishing) { return; }
         if (!isAlreadyFishing)
         {
+            isRunning = true;
             model.gameObject.SetActive(true);
             IsMinigameRunning?.Invoke(true);
             isAlreadyFishing = true;
@@ -64,6 +66,7 @@ public class FishMinigameController : MonoBehaviour, IFishMinigame
     public void OnEnd()
     {
         StartCoroutine(EndActions());
+        isRunning = false;
     }
 
     public void ActionsInMinigame(bool isMinigameRunning)
