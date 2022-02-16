@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using UnityEngine;
+using System;
 
 public class PlayerInputs : MonoBehaviour, Iinput
 {
     [SerializeField] private LayerMask contactLayers;
     [SerializeField] private LayerMask fishLayerMask;
+    [SerializeField] private LayerMask speedBoostLayer;
     public bool isOnMenue { get; private set;}
-    private void Start()
+    private void Start()  
     {
         HudManager.Instance.isOnMenue += SetMenueState;
     }

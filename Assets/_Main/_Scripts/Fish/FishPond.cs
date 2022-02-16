@@ -5,9 +5,8 @@ using UnityEngine;
 public class FishPond : MonoBehaviour,IFishMinigame
 {
     [SerializeField] private PondStats pondStats;
-    [SerializeField] private int fishQuantity;
+    private int fishQuantity;
     private PlayerModel target;
-   // [SerializeField] public  List<FishScriptableObject> fishes = new List<FishScriptableObject>();
     public FishMinigameController Controller;
     private void Start()
     {

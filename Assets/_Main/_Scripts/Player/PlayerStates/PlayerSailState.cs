@@ -3,12 +3,14 @@ using UnityEngine;
 using System;
 public class PlayerSailState<T> : State<T>
 {
+
     private Action _onMove;
     private T _idleInput;
     private T _interactInput;
     private T _onMenueInput;
     private PlayerInputs _playerInputs;
     public PlayerSailState(Action onMove, T idleInput, T interactInput,T onMenueInput, PlayerInputs playerInputs)
+
     {
         _onMove = onMove;
         _idleInput = idleInput;
@@ -33,7 +35,6 @@ public class PlayerSailState<T> : State<T>
             _parentFsm.Transition(_onMenueInput);
             return;
         }
-
         _onMove?.Invoke();
     }
 }

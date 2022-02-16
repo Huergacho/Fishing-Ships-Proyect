@@ -10,7 +10,7 @@ public class BaseActor : MonoBehaviour
 
     protected virtual void Start()
     {
-        speed = actorStats.MaxSpeed;
+        speed = actorStats.WalkSpeed;
         health = actorStats.MaxHealth;
     }
     protected virtual void TakeDamage(float damage)
