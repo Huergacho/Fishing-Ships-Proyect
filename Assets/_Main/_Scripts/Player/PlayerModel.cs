@@ -10,7 +10,9 @@ public class PlayerModel : BaseActor
     [SerializeField] private float distanceToFish;
     [SerializeField]private int maxFishes;
     [SerializeField] private int actualMoney;
-
+    [SerializeField] private float boostFVIncrease;
+    private Camera _mainCam;
+    public Camera MainCam => _mainCam;
     #endregion
 
     private int actualFishes = 0;
@@ -28,6 +30,7 @@ public class PlayerModel : BaseActor
 
     protected override void Start()
     {
+        _mainCam = Camera.main;
         GameManager.instance.player = this;
         InitializeHud();
         base.Start();

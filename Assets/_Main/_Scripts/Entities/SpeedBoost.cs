@@ -8,11 +8,16 @@ public class SpeedBoost : MonoBehaviour, IPickeable
     [SerializeField] private float boostTime;
     private float _currentBoostTime;
     private bool _canBoost;
+    private void Start()
+    {
+        _currentBoostTime = boostTime;
+    }
     private void OnTriggerEnter(Collider other)
     {
         if ((playerLayerMask.value & (1 << other.transform.gameObject.layer)) > 0)
         {
             _canBoost = true;
+            _currentBoostTime = boostTime;
         }
     }
     private void Update()
