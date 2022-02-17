@@ -15,6 +15,7 @@ public class PondController : MonoBehaviour, IFishMinigame
     private FishMinigameController _controller;
     public event Action OnfishPondAssigned;
     private bool minigameRunning;
+    [SerializeField] private LootTable fishingRoullete;
     #region StartActions
     public void Initialize()
     {
@@ -66,7 +67,8 @@ public class PondController : MonoBehaviour, IFishMinigame
     }
     public void GetFishesFromPond()
     {
-        actualFishPond.GetFish();
+        actualFishPond.GetFish(fishingRoullete.GetRandomItem().itemName);
+        
     }
     private void Update()
     {

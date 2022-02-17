@@ -4,6 +4,17 @@ using UnityEngine;
 using System;
 public class PlayerModel : BaseActor
 {
+    [System.Serializable]
+    public class FishInventory
+    {
+        [SerializeField] public string fishTier;
+        [SerializeField] private int quantity;
+
+        public void AddFishes(int quantityToAdd)
+        {
+            quantity += quantityToAdd;
+        }
+    }
     #region SerializeFields
 
     [SerializeField] private Transform mouseIndicator;
@@ -11,6 +22,8 @@ public class PlayerModel : BaseActor
     [SerializeField]private int maxFishes;
     [SerializeField] private int actualMoney;
     [SerializeField] private float boostFVIncrease;
+    [SerializeField] private List<FishInventory> fishesList = new List<FishInventory>();
+    //[SerializeField] private Dictionary<string, int> fishInventory;
     private Camera _mainCam;
     public Camera MainCam => _mainCam;
     #endregion
@@ -30,6 +43,7 @@ public class PlayerModel : BaseActor
 
     protected override void Start()
     {
+        //fishInventory = new Dictionary<string,int>();
         _mainCam = Camera.main;
         GameManager.instance.player = this;
         InitializeHud();
@@ -98,10 +112,26 @@ public class PlayerModel : BaseActor
         }
     }
 
-    public void AddToInventory(int fishesToAdd)
+    public void AddToInventory(int fishesToAdd, string fishTier)
     {
-        //fishes.Add(fishToAdd);
-        actualFishes+= fishesToAdd;
+        bool isOnInventory = false;
+        foreach (var item in fishesList)
+        {
+            if (item.fishTier == fishTier)
+            {
+                item.AddFishes(fishesToAdd);
+                isOnInventory = true;
+            }
+
+        }
+        if (!isOnInventory)
+        {
+            var newFish = new FishInventory();
+            newFish.fishTier = fishTier;
+            fishesList.Add(newFish);
+            newFish.AddFishes(fishesToAdd);
+        }
+        actualFishes += fishesToAdd;
         HudManager.Instance.FishCounter.UpdateFishesCount(actualFishes,maxFishes);
         HudManager.Instance.FishCounter.AddFishes(fishesToAdd);
     }
