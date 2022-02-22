@@ -6,31 +6,56 @@ using UnityEngine.UI;
 using TMPro;
 public class PierShop : MonoBehaviour
 {
-    [SerializeField] private ShopStats shopStats;
-    [SerializeField] private Button sellFishesButton;
-    [SerializeField] private Button exitMenueButton;
+    //[SerializeField] private ShopStats shopStats;
+    //[SerializeField] private Button sellFishesButton;
+    //[SerializeField] private Button exitMenueButton;
+    //public event Action<int> OnSell;
+    //private void Start()
+    //{
+
+    //}
+    //public void SellFishes()
+    //{
+    //    OnSell?.Invoke(shopStats.SellItemValue);
+    //}
     [SerializeField] private TextMeshProUGUI moneyCount;
-    public event Action<int,int> OnSell;
-    private void Start()
+
+    [SerializeField] private List<IStorable> itemStock = new List<IStorable>();
+
+    [SerializeField] private GameObject sellItemTemplate;
+
+    [SerializeField] private Transform scrollView;
+
+    private void InitializeShop()
     {
-        sellFishesButton.onClick.AddListener(SellFishes);
-        exitMenueButton.onClick.AddListener(CloseMenue);
+        for (int i = 0; i < itemStock.Count; i++)
+        {
+            var item = Instantiate(sellItemTemplate, scrollView);
+            var itemStorable = item.GetComponent<IStorable>();
+            itemStock.Add(itemStorable);
+        }
     }
+
+    private void OnSell(IStorable itemToSell)
+    {
+       
+    }
+
     public void CloseMenue()
     {
         HudManager.Instance.ExitMenue();
         gameObject.SetActive(false);
     }
-    public void SellFishes()
-    {
-        OnSell?.Invoke(shopStats.SellItemValue,shopStats.SellItemQuantity);
-    }
+
     public void UpdateMoneyCount(int actualMoney)
     {
         moneyCount.text = actualMoney.ToString();
     }
+
     private void OnEnable()
     {
         HudManager.Instance.EnterInMenu();
     }
+
+
 }

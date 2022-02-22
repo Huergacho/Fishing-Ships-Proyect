@@ -15,7 +15,10 @@ public class PondController : MonoBehaviour, IFishMinigame
     private FishMinigameController _controller;
     public event Action OnfishPondAssigned;
     private bool minigameRunning;
-    [SerializeField] private LootTable fishingRoullete;
+    //[SerializeField] private LootTable fishingRoullete;
+    private Roulette fishRoullete = new Roulette();
+    [SerializeField] private Dictionary<FishScriptableObject, float> typeOfFishes = new Dictionary<FishScriptableObject, float>();
+    [SerializeField] private List<FishScriptableObject> typeOfFishesList;
     #region StartActions
     public void Initialize()
     {
@@ -23,6 +26,10 @@ public class PondController : MonoBehaviour, IFishMinigame
         _controller = FishMinigameController.Instance;
         _target = FishMinigameController.Instance.Player;
         GenerateFishPonds();
+        foreach (var item in typeOfFishesList)
+        {
+            typeOfFishes.Add(item, item.Probability);
+        }
     }
     private Vector3 GenerateFishes()
     {
@@ -67,7 +74,7 @@ public class PondController : MonoBehaviour, IFishMinigame
     }
     public void GetFishesFromPond()
     {
-        actualFishPond.GetFish(fishingRoullete.GetRandomItem().itemName);
+        actualFishPond.GetFish(fishRoullete.Run(typeOfFishes)); 
         
     }
     private void Update()

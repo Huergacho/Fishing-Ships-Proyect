@@ -4,17 +4,6 @@ using UnityEngine;
 using System;
 public class PlayerModel : BaseActor
 {
-    [System.Serializable]
-    public class FishInventory
-    {
-        [SerializeField] public string fishTier;
-        [SerializeField] private int quantity;
-
-        public void AddFishes(int quantityToAdd)
-        {
-            quantity += quantityToAdd;
-        }
-    }
     #region SerializeFields
 
     [SerializeField] private Transform mouseIndicator;
@@ -22,20 +11,15 @@ public class PlayerModel : BaseActor
     [SerializeField]private int maxFishes;
     [SerializeField] private int actualMoney;
     [SerializeField] private float boostFVIncrease;
-    [SerializeField] private List<FishInventory> fishesList = new List<FishInventory>();
-    //[SerializeField] private Dictionary<string, int> fishInventory;
+    [SerializeField] private List<FishScriptableObject> fishesCatched = new List<FishScriptableObject>();
     private Camera _mainCam;
     public Camera MainCam => _mainCam;
     #endregion
 
-    private int actualFishes = 0;
     private Rigidbody _rb;
+    private int actualFishes = 0;
     public float DistanceToFish => distanceToFish;
-    #region Events
-
     public event Action<FishPond> OnPondAssign;
-
-    #endregion
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
@@ -56,7 +40,7 @@ public class PlayerModel : BaseActor
         controller.onIdle += Idle;
         controller.onFish += Fish;
         controller.onMovePointer += MovePointer;
-        HudManager.Instance.PierShop.OnSell += AddMoney;
+        //HudManager.Instance.PierShop.OnSell += AddMoney;
     }
 
     private void InitializeHud()
@@ -112,45 +96,22 @@ public class PlayerModel : BaseActor
         }
     }
 
-    public void AddToInventory(int fishesToAdd, string fishTier)
-    {
-        bool isOnInventory = false;
-        foreach (var item in fishesList)
-        {
-            if (item.fishTier == fishTier)
-            {
-                item.AddFishes(fishesToAdd);
-                isOnInventory = true;
-            }
 
-        }
-        if (!isOnInventory)
-        {
-            var newFish = new FishInventory();
-            newFish.fishTier = fishTier;
-            fishesList.Add(newFish);
-            newFish.AddFishes(fishesToAdd);
-        }
-        actualFishes += fishesToAdd;
-        HudManager.Instance.FishCounter.UpdateFishesCount(actualFishes,maxFishes);
-        HudManager.Instance.FishCounter.AddFishes(fishesToAdd);
-    }
 
-    private void AddMoney(int moneyToAdd,int fishesSelled)
+    private void AddMoney(int moneyToAdd)
     {
         if(actualFishes != 0)
         {
-            RemoveFishes(fishesSelled);
             actualMoney += moneyToAdd;
             HudManager.Instance.PierShop.UpdateMoneyCount(actualMoney);
         }
     }
 
-    private void RemoveFishes(int fishesToRemove)
+    private void RemoveFishes(IStorable itemToRemove)
     {
-        actualFishes -= fishesToRemove;
+        actualFishes -= 1;
         HudManager.Instance.FishCounter.UpdateFishesCount(actualFishes, maxFishes);
-        HudManager.Instance.FishCounter.RemoveFishes(fishesToRemove);
+        HudManager.Instance.FishCounter.RemoveFishes(1);
     }
 
     #endregion
@@ -171,5 +132,18 @@ public class PlayerModel : BaseActor
     }
 
     #endregion
-
+    #region InventoryControll
+    public void AddToInventory(IStorable itemToAdd)
+    {
+        HudManager.Instance.Inventory.AddItemToInventory(itemToAdd);
+        AddFishes();
+    }
+    private void AddFishes()
+    {
+        actualFishes++;
+        
+        HudManager.Instance.FishCounter.UpdateFishesCount(actualFishes, maxFishes);
+        HudManager.Instance.FishCounter.AddFishes(1);
+    }
+    #endregion
 }

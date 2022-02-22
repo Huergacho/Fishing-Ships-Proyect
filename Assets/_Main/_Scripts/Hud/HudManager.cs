@@ -9,10 +9,15 @@ public class HudManager : MonoBehaviour
 
     [SerializeField] private PierShop pierShop;
 
-    public event Action<bool> isOnMenue;
     public PierShop PierShop => pierShop;
+
+    [SerializeField] private InventoryHud inventory;
+    public InventoryHud Inventory => inventory;
+
     private static HudManager instance;
     public static HudManager Instance => instance;
+    
+    public event Action<bool> isOnMenue;
 
     private void Awake()
     {

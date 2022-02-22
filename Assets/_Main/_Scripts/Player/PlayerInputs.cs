@@ -59,4 +59,8 @@ public class PlayerInputs : MonoBehaviour, Iinput
         }
         else return Vector3.zero;
     }
+    public bool WantShowInventory()
+    {
+        return Input.GetKeyDown(KeyCode.E);
+    }
 }

@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 043c77a2cce7028468549876621caaab, type: 3}
   m_Name: 1 Star
   m_EditorClassIdentifier: 
-  category: 0
-  fishName: 
+  probability: 50
+  fishName: Belugo
+  showImage: {fileID: 21300000, guid: c1daf57619a354442af9377589b39dfe, type: 3}

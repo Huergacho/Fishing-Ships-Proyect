@@ -27,6 +27,7 @@ public class PlayerStateMachine : MonoBehaviour
     }
     private void OnMoveCommand()
     {
+        ShowInventory();
         onMove?.Invoke();
         onMovePointer?.Invoke(_playerInputs.UpdateMousePosition());
     }
@@ -36,11 +37,13 @@ public class PlayerStateMachine : MonoBehaviour
     }
     private void OnFishingCommand()
     {
+        ShowInventory();
         onFish?.Invoke(_playerInputs.DetectFishPond(_playerInputs.UpdateMousePosition(), _playerModel.DistanceToFish));
         _fsm.Transition(PlayerStates.Idle);
     }
     private void OnIdleCommand()
     {
+        ShowInventory();
         onIdle?.Invoke();
         onMovePointer?.Invoke(_playerInputs.UpdateMousePosition());
     }
@@ -71,5 +74,10 @@ public class PlayerStateMachine : MonoBehaviour
     private void Update()
     {
         _fsm.UpdateState();
+    }
+    private void ShowInventory()
+    {
+        if(_playerInputs.WantShowInventory())
+        HudManager.Instance.Inventory.ShowInventory();
     }
 }

@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 043c77a2cce7028468549876621caaab, type: 3}
   m_Name: 2 Star
   m_EditorClassIdentifier: 
-  category: 0
-  fishName: 
+  probability: 25
+  fishName: Plata
+  showImage: {fileID: -2667432323186418593, guid: a4aac3166a8732d4f82d1eb4b6b48324, type: 3}
