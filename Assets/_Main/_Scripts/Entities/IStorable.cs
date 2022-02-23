@@ -10,7 +10,5 @@ using UnityEngine;
 
         public string ItemName { get;}
 
-        public bool CanSellIt { get; }
-
         public int ItemValue { get; }
     }

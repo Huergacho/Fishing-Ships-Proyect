@@ -20,7 +20,7 @@ public class FishPond : MonoBehaviour,IFishMinigame
     {
         fishQuantity--;
     }
-    public void GetFish(FishScriptableObject fishToGet)
+    public void GetFish(ItemScriptableObject fishToGet)
     {
         var fishObtained = Random.Range(1, fishQuantity);
         target.AddToInventory(fishToGet);

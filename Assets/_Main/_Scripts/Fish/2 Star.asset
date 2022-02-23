@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: 2 Star
   m_EditorClassIdentifier: 
   probability: 25
-  fishName: Plata
+  itemName: Dos
   showImage: {fileID: -2667432323186418593, guid: a4aac3166a8732d4f82d1eb4b6b48324, type: 3}
+  itemValue: 2
+  itemIndex: 1

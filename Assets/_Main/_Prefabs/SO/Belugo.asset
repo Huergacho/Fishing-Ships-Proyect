@@ -9,11 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 043c77a2cce7028468549876621caaab, type: 3}
-  m_Name: 3 Star
+  m_Script: {fileID: 11500000, guid: 3475830113af99048aec01b736a434bb, type: 3}
+  m_Name: Belugo
   m_EditorClassIdentifier: 
-  probability: 25
-  itemName: Tres
-  showImage: {fileID: 10915, guid: 0000000000000000f000000000000000, type: 0}
-  itemValue: 3
-  itemIndex: 3
+  itemName: Belugo
+  icon: {fileID: 0}
+  itemValue: 0
+  objectReference: {fileID: 0}

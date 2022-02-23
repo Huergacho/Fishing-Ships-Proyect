@@ -17,8 +17,8 @@ public class PondController : MonoBehaviour, IFishMinigame
     private bool minigameRunning;
     //[SerializeField] private LootTable fishingRoullete;
     private Roulette fishRoullete = new Roulette();
-    [SerializeField] private Dictionary<FishScriptableObject, float> typeOfFishes = new Dictionary<FishScriptableObject, float>();
-    [SerializeField] private List<FishScriptableObject> typeOfFishesList;
+    [SerializeField] private Dictionary<ItemScriptableObject, float> typeOfFishes = new Dictionary<ItemScriptableObject, float>();
+    [SerializeField] private List<ItemScriptableObject> typeOfFishesList;
     #region StartActions
     public void Initialize()
     {

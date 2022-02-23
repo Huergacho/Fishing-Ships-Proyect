@@ -8,7 +8,7 @@ using UnityEngine.UI;
 class InventorySlot : MonoBehaviour
 {
     [SerializeField] private Image icon;
-    [SerializeField]private IStorable _item;
+    [SerializeField]private ItemScriptableObject _item;
     [SerializeField] private Button clearButton;
     private InventoryHud _controller;
 
@@ -21,7 +21,7 @@ class InventorySlot : MonoBehaviour
     {
         _controller = controllerAssigned;
     }
-    public void AddItem(IStorable newItem)
+    public void AddItem(ItemScriptableObject newItem)
     {
         _item = newItem;
         icon.sprite = newItem.ShowImage;

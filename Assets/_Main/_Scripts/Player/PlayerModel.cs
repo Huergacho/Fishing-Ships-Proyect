@@ -11,7 +11,7 @@ public class PlayerModel : BaseActor
     [SerializeField]private int maxFishes;
     [SerializeField] private int actualMoney;
     [SerializeField] private float boostFVIncrease;
-    [SerializeField] private List<FishScriptableObject> fishesCatched = new List<FishScriptableObject>();
+    [SerializeField] private List<ItemScriptableObject> fishesCatched = new List<ItemScriptableObject>();
     private Camera _mainCam;
     public Camera MainCam => _mainCam;
     #endregion
@@ -20,6 +20,7 @@ public class PlayerModel : BaseActor
     private int actualFishes = 0;
     public float DistanceToFish => distanceToFish;
     public event Action<FishPond> OnPondAssign;
+    public event Action<int, int> UpdateFishCount;
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
@@ -40,7 +41,8 @@ public class PlayerModel : BaseActor
         controller.onIdle += Idle;
         controller.onFish += Fish;
         controller.onMovePointer += MovePointer;
-        //HudManager.Instance.PierShop.OnSell += AddMoney;
+        HudManager.Instance.PierShop.OnSell += AddMoney;
+        HudManager.Instance.Inventory.OnRemoveItem += RemoveFishes;
     }
 
     private void InitializeHud()
@@ -96,23 +98,19 @@ public class PlayerModel : BaseActor
         }
     }
 
-
-
-    private void AddMoney(int moneyToAdd)
+    private void AddFishes()
     {
-        if(actualFishes != 0)
-        {
-            actualMoney += moneyToAdd;
-            HudManager.Instance.PierShop.UpdateMoneyCount(actualMoney);
-        }
-    }
+        actualFishes++;
 
-    private void RemoveFishes(IStorable itemToRemove)
+        UpdateFishCount?.Invoke(actualFishes, maxFishes);
+        HudManager.Instance.FishCounter.AddFishes();
+    }
+    public void RemoveFishes()
     {
         actualFishes -= 1;
-        HudManager.Instance.FishCounter.UpdateFishesCount(actualFishes, maxFishes);
-        HudManager.Instance.FishCounter.RemoveFishes(1);
+        UpdateFishCount?.Invoke(actualFishes, maxFishes);
     }
+
 
     #endregion
 
@@ -133,17 +131,20 @@ public class PlayerModel : BaseActor
 
     #endregion
     #region InventoryControll
-    public void AddToInventory(IStorable itemToAdd)
+    public void AddToInventory(ItemScriptableObject itemToAdd)
     {
         HudManager.Instance.Inventory.AddItemToInventory(itemToAdd);
-        AddFishes();
+        if(itemToAdd is ItemScriptableObject)
+        {
+            AddFishes();
+        }
     }
-    private void AddFishes()
+    private void AddMoney(int moneyToAdd)
     {
-        actualFishes++;
-        
-        HudManager.Instance.FishCounter.UpdateFishesCount(actualFishes, maxFishes);
-        HudManager.Instance.FishCounter.AddFishes(1);
+        actualMoney += moneyToAdd;
+        HudManager.Instance.PierShop.UpdateMoneyCount(actualMoney);
     }
+
+    
     #endregion
 }

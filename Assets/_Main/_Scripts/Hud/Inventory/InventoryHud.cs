@@ -8,7 +8,7 @@ using UnityEngine;
 using TMPro;
 public class InventoryHud : MonoBehaviour
 {
-    [SerializeField] private List<IStorable> _itemsStored = new List<IStorable>();
+    [SerializeField] private HashSet<ItemScriptableObject> _itemsStored = new HashSet<ItemScriptableObject>();
     [SerializeField] private GameObject itemSlotTemplate;
     [SerializeField] private List<InventorySlot> _itemSlots = new List<InventorySlot>();
     [SerializeField] private Transform itemSlotContainer;
@@ -16,6 +16,7 @@ public class InventoryHud : MonoBehaviour
     [SerializeField] private int _maxSlots;
     [SerializeField] private int _currentSlots;
     private bool inventoryState = false;
+    public Action OnRemoveItem;
     private void Start()
     {
         _currentSlots = _maxSlots;
@@ -32,7 +33,7 @@ public class InventoryHud : MonoBehaviour
             _itemSlots.Add(slot.GetComponent<InventorySlot>());
         }
     }
-    public void AddItemToInventory(IStorable itemToAdd)
+    public void AddItemToInventory(ItemScriptableObject itemToAdd)
     {
         bool assigned = false;
         if(_maxSlots >= _itemsStored.Count)
@@ -44,6 +45,7 @@ public class InventoryHud : MonoBehaviour
                 if (item.isSlotEmpty() && assigned == false)
                 {
                     item.AddItem(itemToAdd);
+                    _itemsStored.Add(itemToAdd);
                     assigned = true;
                     return;
                 }
@@ -55,10 +57,13 @@ public class InventoryHud : MonoBehaviour
             return;
         }
     }
-    public void RemoveFromInventory(IStorable itemToRemove)
+    public void RemoveFromInventory(ItemScriptableObject itemToRemove)
     {
         if(itemToRemove != null)
-        _itemsStored.Remove(itemToRemove);
+        {
+            _itemsStored.Remove(itemToRemove);
+            OnRemoveItem?.Invoke();
+        }
     }
     public void ShowInventory()
     {
@@ -71,6 +76,17 @@ public class InventoryHud : MonoBehaviour
         {
          model.SetActive(false);
 
+        }
+    }
+    public bool CheckForItem(ItemScriptableObject itemToCheckFor)
+    {
+        if (_itemsStored.Contains(itemToCheckFor))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 }

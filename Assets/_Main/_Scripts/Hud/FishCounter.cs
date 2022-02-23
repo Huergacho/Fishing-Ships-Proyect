@@ -17,7 +17,8 @@ public class FishCounter : MonoBehaviour
     }
     private void Start()
     {
-        
+        HudManager.Instance.Inventory.OnRemoveItem += RemoveFishes;
+        GameManager.instance.player.UpdateFishCount += UpdateFishesCount;
     }
     public void UpdateFishesCount(int fishes, int maxFishes)
     {
@@ -28,14 +29,14 @@ public class FishCounter : MonoBehaviour
             UpdateCounter();
         }
     }
-    public void AddFishes(int quantityToAdd)
+    public void AddFishes()
     {
-        hoverText.text = "+" + quantityToAdd;
+        hoverText.text = "+" + 1;
         _animator.Play("AddFish");
     }
-    public void RemoveFishes(int quantityToRemove)
+    public void RemoveFishes()
     {
-        hoverText.text = "-" + quantityToRemove;
+        hoverText.text = "-" + 1;
         _animator.Play("RemoveFish");
     }
     //Llamado por animacion
