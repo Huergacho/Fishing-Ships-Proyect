@@ -41,7 +41,7 @@ public class PlayerModel : BaseActor
         controller.onIdle += Idle;
         controller.onFish += Fish;
         controller.onMovePointer += MovePointer;
-        HudManager.Instance.PierShop.OnSell += AddMoney;
+        HudManager.Instance.PierShop.OnSell += OnSell;
         HudManager.Instance.Inventory.OnRemoveItem += RemoveFishes;
     }
 
@@ -131,13 +131,15 @@ public class PlayerModel : BaseActor
 
     #endregion
     #region InventoryControll
+
+    private void OnSell(ItemScriptableObject itemSelled)
+    {
+        AddMoney(itemSelled.ItemValue);
+    }
     public void AddToInventory(ItemScriptableObject itemToAdd)
     {
         HudManager.Instance.Inventory.AddItemToInventory(itemToAdd);
-        if(itemToAdd is ItemScriptableObject)
-        {
-            AddFishes();
-        }
+        AddFishes();
     }
     private void AddMoney(int moneyToAdd)
     {

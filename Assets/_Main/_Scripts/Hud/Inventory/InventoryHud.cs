@@ -15,7 +15,6 @@ public class InventoryHud : MonoBehaviour
     [SerializeField] private GameObject model;
     [SerializeField] private int _maxSlots;
     [SerializeField] private int _currentSlots;
-    private bool inventoryState = false;
     public Action OnRemoveItem;
     private void Start()
     {
@@ -67,16 +66,18 @@ public class InventoryHud : MonoBehaviour
     }
     public void ShowInventory()
     {
-        inventoryState = !inventoryState;
-        if (inventoryState)
+        if(model.activeInHierarchy == true)
         {
-         model.SetActive(true);
+            model.SetActive(false);
         }
         else
         {
-         model.SetActive(false);
-
+            model.SetActive(true);
         }
+    }
+    public void ForceInventoryToShow(bool stateToForce)
+    {
+        model.SetActive(stateToForce);
     }
     public bool CheckForItem(ItemScriptableObject itemToCheckFor)
     {
@@ -89,4 +90,32 @@ public class InventoryHud : MonoBehaviour
             return false;
         }
     }
+    //public void SellItem(ItemScriptableObject itemToSell)
+    //{
+    //    //foreach (var item in _itemSlots)
+    //    //{
+    //    //    if(item.Item == itemToSell)
+    //    //    {
+    //    //        item.ClearSlot();
+    //    //        return;
+    //    //    }
+    //    //    else
+    //    //    {
+    //    //        continue;
+    //    //    }
+    //    //}
+    //    for (int i = 0; i < _itemSlots.Count; i++)
+    //    {
+    //        var item = _itemSlots[i];
+    //        if (item.Item == itemToSell)
+    //        {
+    //            item.ClearSlot();
+    //            return;
+    //        }
+    //        else
+    //        {
+    //            continue;
+    //        }
+    //    }
+    //}
 }

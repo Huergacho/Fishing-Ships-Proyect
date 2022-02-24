@@ -10,7 +10,7 @@ public class Pier : MonoBehaviour
         if (collision.gameObject.layer == GameManager.instance.player.gameObject.layer)
         {
             shopCanvas.SetActive(true);
-            HudManager.Instance.Inventory.gameObject.SetActive(true);
+            HudManager.Instance.Inventory.ForceInventoryToShow(true);
         }
     }
     private void OnCollisionExit(Collision collision)
@@ -18,7 +18,8 @@ public class Pier : MonoBehaviour
         if (collision.gameObject.layer == GameManager.instance.player.gameObject.layer)
         {
             shopCanvas.SetActive(false);
-            HudManager.Instance.Inventory.gameObject.SetActive(false);
+            HudManager.Instance.Inventory.ForceInventoryToShow(false);
+
         }
     }
 }

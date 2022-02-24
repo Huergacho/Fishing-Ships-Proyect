@@ -77,7 +77,9 @@ public class PlayerStateMachine : MonoBehaviour
     }
     private void ShowInventory()
     {
-        if(_playerInputs.WantShowInventory())
-        HudManager.Instance.Inventory.ShowInventory();
+        if (_playerInputs.WantShowInventory())
+        {
+            HudManager.Instance.Inventory.ShowInventory();
+        }
     }
 }

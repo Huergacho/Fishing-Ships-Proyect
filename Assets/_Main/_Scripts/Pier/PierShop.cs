@@ -6,33 +6,18 @@ using UnityEngine.UI;
 using TMPro;
 public class PierShop : MonoBehaviour
 {
-    //[SerializeField] private ShopStats shopStats;
-    //[SerializeField] private Button sellFishesButton;
-    //[SerializeField] private Button exitMenueButton;
-    //private void Start()
-    //{
-
-    //}
-    //public void SellFishes()
-    //{
-    //    OnSell?.Invoke(shopStats.SellItemValue);
-    //}
+    [SerializeField] private Button exitMenueButton;
     [SerializeField] private TextMeshProUGUI moneyCount;
-
     [SerializeField] private List<ItemScriptableObject> itemPrefabs = new List<ItemScriptableObject>();
-
-  //  [SerializeField] private List<ShopItem> itemsInShop = new List<ShopItem>();
-
     [SerializeField] private GameObject sellItemTemplate;
-
     [SerializeField] private Transform scrollView;
-
     [SerializeField] private Transform itemContainer;
-    public event Action<int> OnSell;
+    public event Action<ItemScriptableObject> OnSell;
     public event Action<int> OnBuy;
 
     private void Start()
     {
+        exitMenueButton?.onClick.AddListener(CloseMenue);
         InitializeShop();
     }
 
@@ -51,11 +36,11 @@ public class PierShop : MonoBehaviour
     {
         OnBuy?.Invoke(value);
     }
-    public void Sell(int value, ItemScriptableObject itemToSell)
+    public void Sell(ItemScriptableObject itemToSell)
     {
         if (HudManager.Instance.Inventory.CheckForItem(itemToSell))
         {
-            OnSell?.Invoke(value);
+            OnSell?.Invoke(itemToSell);
         }
         else
         {
@@ -66,6 +51,7 @@ public class PierShop : MonoBehaviour
     public void CloseMenue()
     {
         HudManager.Instance.ExitMenue();
+        HudManager.Instance.Inventory.ForceInventoryToShow(false);
         gameObject.SetActive(false);
     }
 

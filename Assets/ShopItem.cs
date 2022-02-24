@@ -41,7 +41,7 @@ public class ShopItem : MonoBehaviour
     {
         if(itemStats != null)
         {
-            _controller.Sell(itemStats.ItemValue, itemStats);
+            _controller.Sell(itemStats);
         }
     }
 
