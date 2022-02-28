@@ -7,7 +7,6 @@ public class ShopItem : MonoBehaviour
 {
     [SerializeField] private Image icon;
     [SerializeField] private Button buyButton;
-    [SerializeField] private Button sellButton;
     [SerializeField] private ItemScriptableObject itemStats;
     [SerializeField] private Button infoButton;
     [SerializeField] private GameObject infoObject;
@@ -20,7 +19,6 @@ public class ShopItem : MonoBehaviour
     {
         infoButton?.onClick.AddListener(ShowInfo);
         buyButton?.onClick.AddListener(BuyItem);
-        sellButton?.onClick.AddListener(SellItem);
     }
 
     public void AssignItem(ItemScriptableObject newItem)
@@ -36,13 +34,6 @@ public class ShopItem : MonoBehaviour
     public void AssignController(PierShop controller)
     {
         _controller = controller;
-    }
-    void SellItem()
-    {
-        if(itemStats != null)
-        {
-            _controller.Sell(itemStats);
-        }
     }
 
     void ShowInfo()

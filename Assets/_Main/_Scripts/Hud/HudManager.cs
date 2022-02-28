@@ -4,11 +4,11 @@ using UnityEngine;
 using System;
 public class HudManager : MonoBehaviour
 {
-    [SerializeField] private FishCounter fishCounter;
-    public FishCounter FishCounter => fishCounter;
+    [SerializeField] private GameObject[] activeItems;
+    [SerializeField] private RewardObtainText rewardObtainedText;
+    public RewardObtainText RewardObtainText => rewardObtainedText;
 
     [SerializeField] private PierShop pierShop;
-
     public PierShop PierShop => pierShop;
 
     [SerializeField] private InventoryHud inventory;
@@ -22,6 +22,25 @@ public class HudManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+    }
+    private void Start()
+    {
+        pierShop.onShop += ShopMenue; 
+        foreach(var item in activeItems)
+        {
+            item.SetActive(true);
+        }
+    }
+    public void ShopMenue(bool shopMenue)
+    {
+        if (shopMenue)
+        {
+            EnterInMenu();
+        }
+        else
+        {
+            ExitMenue();
+        }
     }
     public void EnterInMenu()
     {

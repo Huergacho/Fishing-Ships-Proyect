@@ -7,8 +7,6 @@ public class PlayerStateMachine : MonoBehaviour
     private PlayerModel _playerModel;
     private PlayerInputs _playerInputs;
     public event Action onMove;
-    //public event Action onNormalSailing;
-    //public event Action onFastSailing;
     public event Action onIdle;
     public event Action onInteract;
     public event Action onMenue;

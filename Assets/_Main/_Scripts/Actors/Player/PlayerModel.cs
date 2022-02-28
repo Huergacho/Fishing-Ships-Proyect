@@ -12,18 +12,22 @@ public class PlayerModel : BaseActor
     [SerializeField] private int actualMoney;
     [SerializeField] private float boostFVIncrease;
     [SerializeField] private List<ItemScriptableObject> fishesCatched = new List<ItemScriptableObject>();
+    [SerializeField] private float fishSkill;
+    public float FishSkill => fishSkill;
     private Camera _mainCam;
     public Camera MainCam => _mainCam;
     #endregion
 
     private Rigidbody _rb;
     private int actualFishes = 0;
+    private Animator pointerAnimator;
     public float DistanceToFish => distanceToFish;
     public event Action<FishPond> OnPondAssign;
     public event Action<int, int> UpdateFishCount;
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
+        pointerAnimator = mouseIndicator.gameObject.GetComponent<Animator>();
     }
 
     protected override void Start()
@@ -42,27 +46,29 @@ public class PlayerModel : BaseActor
         controller.onFish += Fish;
         controller.onMovePointer += MovePointer;
         HudManager.Instance.PierShop.OnSell += OnSell;
-        HudManager.Instance.Inventory.OnRemoveItem += RemoveFishes;
     }
 
     private void InitializeHud()
     {
-        HudManager.Instance.FishCounter.UpdateFishesCount(actualFishes, maxFishes);
         HudManager.Instance.PierShop.UpdateMoneyCount(actualMoney);
     }
     
     #region Movement
 
     public void Idle()
-    {
+    { 
 
     }
 
     public void Move()
     {
         MoveAtMousePos();
-    }
 
+    }
+    public void PlayIndicator()
+    {
+        pointerAnimator.Play("PointAnimation");
+    }
     #endregion
 
     #region Mouse Movement Calculation
@@ -92,26 +98,12 @@ public class PlayerModel : BaseActor
     #region Fishes Controll
     public void Fish(FishPond fishPond)
     {
+        PlayIndicator();
         if (fishPond != null)
         {
             OnPondAssign?.Invoke(fishPond);
         }
     }
-
-    private void AddFishes()
-    {
-        actualFishes++;
-
-        UpdateFishCount?.Invoke(actualFishes, maxFishes);
-        HudManager.Instance.FishCounter.AddFishes();
-    }
-    public void RemoveFishes()
-    {
-        actualFishes -= 1;
-        UpdateFishCount?.Invoke(actualFishes, maxFishes);
-    }
-
-
     #endregion
 
     #region Buffs
@@ -132,14 +124,14 @@ public class PlayerModel : BaseActor
     #endregion
     #region InventoryControll
 
-    private void OnSell(ItemScriptableObject itemSelled)
+    private void OnSell(int value)
     {
-        AddMoney(itemSelled.ItemValue);
+        AddMoney(value);
     }
     public void AddToInventory(ItemScriptableObject itemToAdd)
     {
         HudManager.Instance.Inventory.AddItemToInventory(itemToAdd);
-        AddFishes();
+        HudManager.Instance.RewardObtainText.SetObtainedItem(itemToAdd.ItemName);
     }
     private void AddMoney(int moneyToAdd)
     {

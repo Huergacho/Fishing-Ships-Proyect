@@ -12,9 +12,9 @@ public class PierShop : MonoBehaviour
     [SerializeField] private GameObject sellItemTemplate;
     [SerializeField] private Transform scrollView;
     [SerializeField] private Transform itemContainer;
-    public event Action<ItemScriptableObject> OnSell;
+    public event Action<int> OnSell;
     public event Action<int> OnBuy;
-
+    public event Action<bool> onShop;
     private void Start()
     {
         exitMenueButton?.onClick.AddListener(CloseMenue);
@@ -36,22 +36,13 @@ public class PierShop : MonoBehaviour
     {
         OnBuy?.Invoke(value);
     }
-    public void Sell(ItemScriptableObject itemToSell)
+    public void Sell(int value)
     {
-        if (HudManager.Instance.Inventory.CheckForItem(itemToSell))
-        {
-            OnSell?.Invoke(itemToSell);
-        }
-        else
-        {
-            print("No tenes esto Padre");
-        }
+        OnSell.Invoke(value);
     }
-
     public void CloseMenue()
     {
-        HudManager.Instance.ExitMenue();
-        HudManager.Instance.Inventory.ForceInventoryToShow(false);
+        onShop.Invoke(false);
         gameObject.SetActive(false);
     }
 
@@ -62,7 +53,7 @@ public class PierShop : MonoBehaviour
 
     private void OnEnable()
     {
-        HudManager.Instance.EnterInMenu();
+        onShop.Invoke(true);
     }
 
 

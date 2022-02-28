@@ -20,7 +20,10 @@ public class InventoryHud : MonoBehaviour
     {
         _currentSlots = _maxSlots;
         InitializeSlots();
-        model.SetActive(false);   
+        model.SetActive(false);
+
+        HudManager.Instance.PierShop.onShop += ForceInventoryToShow;
+        HudManager.Instance.PierShop.onShop += isOnShop;
     }
 
     public void InitializeSlots()
@@ -90,32 +93,14 @@ public class InventoryHud : MonoBehaviour
             return false;
         }
     }
-    //public void SellItem(ItemScriptableObject itemToSell)
-    //{
-    //    //foreach (var item in _itemSlots)
-    //    //{
-    //    //    if(item.Item == itemToSell)
-    //    //    {
-    //    //        item.ClearSlot();
-    //    //        return;
-    //    //    }
-    //    //    else
-    //    //    {
-    //    //        continue;
-    //    //    }
-    //    //}
-    //    for (int i = 0; i < _itemSlots.Count; i++)
-    //    {
-    //        var item = _itemSlots[i];
-    //        if (item.Item == itemToSell)
-    //        {
-    //            item.ClearSlot();
-    //            return;
-    //        }
-    //        else
-    //        {
-    //            continue;
-    //        }
-    //    }
-    //}
+    void isOnShop(bool state)
+    {
+        foreach (var item in _itemSlots)
+        {
+            if (!item.isSlotEmpty())
+            {
+                item.CanSell(state);
+            }
+        }
+    }
 }

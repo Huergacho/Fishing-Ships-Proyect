@@ -6,10 +6,11 @@ public class FishSelector : MonoBehaviour
 {
     [SerializeField] private LayerMask fishLayers;
     [SerializeField] private Transform[] barriers;
-    [SerializeField] private float lerpTime;
+    [SerializeField] private float baseLerpTime;
     [SerializeField] private Image detectionLine;
     [SerializeField] private float detectionDistance;
     private bool hasStarted;
+    private float calculatedLerpTime;
     [SerializeField] private GameObject pez;
     //[SerializeField]private Color[] colorBucket = new Color[3];
     private Animator _animator;
@@ -17,7 +18,7 @@ public class FishSelector : MonoBehaviour
     {
         _animator = GetComponent<Animator>();
         FishMinigameController.Instance.IsMinigameRunning += ActionsInMinigame;
-        hasStarted = true;
+        Initialize();
     }
     private void Update()
     {
@@ -56,7 +57,7 @@ public class FishSelector : MonoBehaviour
     void PingPong()
     {
         var dist = Vector3.Distance(barriers[0].localPosition, barriers[1].localPosition);
-        transform.localPosition = new Vector3(transform.localPosition.x, Mathf.PingPong(Time.time * lerpTime / 2, dist) - dist / 2f, transform.localPosition.z);
+        transform.localPosition = new Vector3(transform.localPosition.x, Mathf.PingPong(Time.time * calculatedLerpTime / 2, dist) - dist / 2f, transform.localPosition.z);
     }
 
     void ActionsInMinigame(bool isMinigameRunning)
@@ -73,7 +74,8 @@ public class FishSelector : MonoBehaviour
     }
     void Initialize()
     {
-       // detectionLine.color = colorBucket[0];
+        // detectionLine.color = colorBucket[0];
+        calculatedLerpTime = baseLerpTime / GameManager.instance.player.FishSkill ;
         hasStarted = true;
     }
     void OnEnd()
