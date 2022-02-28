@@ -430,8 +430,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 166.5, y: -70}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 166.5, y: -64.40515}
+  m_SizeDelta: {x: 100, y: 111.1897}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7908587545857938749
 CanvasRenderer:
@@ -502,8 +502,6 @@ MonoBehaviour:
   buyButton: {fileID: 0}
   sellButton: {fileID: 1589980812549545369}
   itemStats: {fileID: 0}
-  infoButton: {fileID: 115397229790674042}
-  infoObject: {fileID: 9048695305542342002}
   infoText: {fileID: 7260877459434929069}
 --- !u!1 &7653153727186845184
 GameObject:
@@ -590,7 +588,6 @@ GameObject:
   - component: {fileID: 4619562330186490863}
   - component: {fileID: 115397229790674042}
   - component: {fileID: 2988922992811674742}
-  - component: {fileID: 3076701526987074412}
   m_Layer: 5
   m_Name: ItemButton
   m_TagString: Untagged
@@ -614,7 +611,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -2.3, y: 2.4}
+  m_AnchoredPosition: {x: -2.3, y: -13.3}
   m_SizeDelta: {x: 61.452, y: 50.718}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8549356084919060929
@@ -714,25 +711,6 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 6.15, y: -7.4}
   m_UseGraphicAlpha: 1
---- !u!114 &3076701526987074412
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7904090453885517983}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32f01387608f51a43bee02a3718a14c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  icon: {fileID: 0}
-  buyButton: {fileID: 0}
-  sellButton: {fileID: 0}
-  itemStats: {fileID: 0}
-  infoButton: {fileID: 0}
-  infoObject: {fileID: 0}
-  infoText: {fileID: 0}
 --- !u!1 &9048695305542342002
 GameObject:
   m_ObjectHideFlags: 0
@@ -744,13 +722,14 @@ GameObject:
   - component: {fileID: 2421116126044435466}
   - component: {fileID: 1931823298049409571}
   - component: {fileID: 304279445700942178}
+  - component: {fileID: 8895880680736689961}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2421116126044435466
 RectTransform:
   m_ObjectHideFlags: 0
@@ -760,7 +739,7 @@ RectTransform:
   m_GameObject: {fileID: 9048695305542342002}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.73936, y: 0.73936, z: 0.73936}
   m_Children:
   - {fileID: 4455975567088149549}
   - {fileID: 2732800553116143384}
@@ -769,8 +748,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 35.2}
+  m_SizeDelta: {x: 0, y: -53.9394}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1931823298049409571
 CanvasRenderer:
@@ -793,7 +772,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.8784314}
+  m_Color: {r: 0.5, g: 0.35027558, b: 0.23349056, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -810,3 +789,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8895880680736689961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9048695305542342002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 0.3, y: -5.77}
+  m_UseGraphicAlpha: 1

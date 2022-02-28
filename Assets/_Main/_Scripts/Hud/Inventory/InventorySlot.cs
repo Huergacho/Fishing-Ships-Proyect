@@ -9,16 +9,17 @@ class InventorySlot : MonoBehaviour
 {
     [SerializeField] private Image icon;
     [SerializeField] private ItemScriptableObject _item;
-    [SerializeField] private Button sellButton;
     public ItemScriptableObject Item => _item;
     [SerializeField] private Button clearButton;
     private InventoryHud _controller;
 
     private void Start()
     {
-        sellButton?.onClick.AddListener(OnSellItem);
         clearButton?.onClick.AddListener(ClearSlot);
-        WipeSlot(); 
+        if(Item == null)
+        {
+            WipeSlot(); 
+        }
     }
     public void AssingController(InventoryHud controllerAssigned)
     {
@@ -34,7 +35,7 @@ class InventorySlot : MonoBehaviour
     }
     public void ClearSlot()
     {
-        _controller.RemoveFromInventory(_item);
+        _controller.RemoveFromInventory(this.Item);
         WipeSlot();
     }
     private void WipeSlot()
@@ -42,22 +43,16 @@ class InventorySlot : MonoBehaviour
         _item = null;
         icon.sprite = null;
         icon.enabled = false;
-        CanSell(false);
         clearButton.gameObject.SetActive(false);
 
     }
-    private void OnSellItem()
+    public void OnSellItem()
     {
         if(Item == null)
         {
             return;
         }
-        HudManager.Instance.PierShop.Sell(_item.ItemValue);
         ClearSlot();
-    }
-    public void CanSell(bool canSell)
-    {
-        sellButton.gameObject.SetActive(canSell);
     }
     public bool isSlotEmpty()
     {

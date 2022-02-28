@@ -12,7 +12,7 @@ public class PierShop : MonoBehaviour
     [SerializeField] private GameObject sellItemTemplate;
     [SerializeField] private Transform scrollView;
     [SerializeField] private Transform itemContainer;
-    public event Action<int> OnSell;
+    public event Action<ItemScriptableObject> OnSell;
     public event Action<int> OnBuy;
     public event Action<bool> onShop;
     private void Start()
@@ -36,13 +36,13 @@ public class PierShop : MonoBehaviour
     {
         OnBuy?.Invoke(value);
     }
-    public void Sell(int value)
+    public void Sell(ItemScriptableObject value)
     {
-        OnSell.Invoke(value);
+        OnSell?.Invoke(value);
     }
     public void CloseMenue()
     {
-        onShop.Invoke(false);
+        onShop?.Invoke(false);
         gameObject.SetActive(false);
     }
 
@@ -53,7 +53,7 @@ public class PierShop : MonoBehaviour
 
     private void OnEnable()
     {
-        onShop.Invoke(true);
+        onShop?.Invoke(true);
     }
 
 

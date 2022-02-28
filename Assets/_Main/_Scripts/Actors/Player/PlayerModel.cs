@@ -11,7 +11,6 @@ public class PlayerModel : BaseActor
     [SerializeField]private int maxFishes;
     [SerializeField] private int actualMoney;
     [SerializeField] private float boostFVIncrease;
-    [SerializeField] private List<ItemScriptableObject> fishesCatched = new List<ItemScriptableObject>();
     [SerializeField] private float fishSkill;
     public float FishSkill => fishSkill;
     private Camera _mainCam;
@@ -19,7 +18,6 @@ public class PlayerModel : BaseActor
     #endregion
 
     private Rigidbody _rb;
-    private int actualFishes = 0;
     private Animator pointerAnimator;
     public float DistanceToFish => distanceToFish;
     public event Action<FishPond> OnPondAssign;
@@ -32,7 +30,6 @@ public class PlayerModel : BaseActor
 
     protected override void Start()
     {
-        //fishInventory = new Dictionary<string,int>();
         _mainCam = Camera.main;
         GameManager.instance.player = this;
         InitializeHud();
@@ -45,7 +42,7 @@ public class PlayerModel : BaseActor
         controller.onIdle += Idle;
         controller.onFish += Fish;
         controller.onMovePointer += MovePointer;
-        HudManager.Instance.PierShop.OnSell += OnSell;
+        HudManager.Instance.Inventory.onSelledItem += OnSell;
     }
 
     private void InitializeHud()

@@ -8,13 +8,15 @@ using UnityEngine;
 using TMPro;
 public class InventoryHud : MonoBehaviour
 {
-    [SerializeField] private HashSet<ItemScriptableObject> _itemsStored = new HashSet<ItemScriptableObject>();
+    [SerializeField] private List<ItemScriptableObject> _itemsStored = new List<ItemScriptableObject>();
     [SerializeField] private GameObject itemSlotTemplate;
     [SerializeField] private List<InventorySlot> _itemSlots = new List<InventorySlot>();
     [SerializeField] private Transform itemSlotContainer;
     [SerializeField] private GameObject model;
     [SerializeField] private int _maxSlots;
     [SerializeField] private int _currentSlots;
+    public event Action<int> onSelledItem;
+
     public Action OnRemoveItem;
     private void Start()
     {
@@ -23,7 +25,8 @@ public class InventoryHud : MonoBehaviour
         model.SetActive(false);
 
         HudManager.Instance.PierShop.onShop += ForceInventoryToShow;
-        HudManager.Instance.PierShop.onShop += isOnShop;
+        //HudManager.Instance.PierShop.onShop += isOnShop;
+        HudManager.Instance.PierShop.OnSell += SellItem;
     }
 
     public void InitializeSlots()
@@ -93,13 +96,25 @@ public class InventoryHud : MonoBehaviour
             return false;
         }
     }
-    void isOnShop(bool state)
+    void SellItem(ItemScriptableObject itemToSell)
     {
-        foreach (var item in _itemSlots)
+        bool selled = false;
+        if (CheckForItem(itemToSell) && selled == false)
         {
-            if (!item.isSlotEmpty())
+            for (int i = 0; i < _itemSlots.Count; i++)
             {
-                item.CanSell(state);
+                var itemSlot = _itemSlots[i];
+                if(itemSlot.Item != itemToSell)
+                {
+                    continue;
+                }
+                else
+                {
+                    itemSlot.OnSellItem();
+                    onSelledItem?.Invoke(itemToSell.ItemValue);
+                    selled = true;
+                    return;
+                }
             }
         }
     }

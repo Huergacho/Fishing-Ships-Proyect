@@ -7,18 +7,15 @@ public class ShopItem : MonoBehaviour
 {
     [SerializeField] private Image icon;
     [SerializeField] private Button buyButton;
+    [SerializeField] private Button sellButton;
     [SerializeField] private ItemScriptableObject itemStats;
-    [SerializeField] private Button infoButton;
-    [SerializeField] private GameObject infoObject;
     [SerializeField] private TextMeshProUGUI infoText;
-
     private PierShop _controller;
-    private bool infoState;
     // Start is called before the first frame update
     void Start()
     {
-        infoButton?.onClick.AddListener(ShowInfo);
         buyButton?.onClick.AddListener(BuyItem);
+        sellButton?.onClick.AddListener(SellItem);
     }
 
     public void AssignItem(ItemScriptableObject newItem)
@@ -29,23 +26,14 @@ public class ShopItem : MonoBehaviour
     }
     void BuyItem()
     {
-       
+        
+    }
+    private void SellItem()
+    {
+        _controller.Sell(itemStats);
     }
     public void AssignController(PierShop controller)
     {
         _controller = controller;
-    }
-
-    void ShowInfo()
-    {
-        if(infoState == true)
-        {
-        infoObject.SetActive(false); 
-        }
-        else
-        {
-            infoObject.SetActive(true);
-        }
-        
     }
 }
