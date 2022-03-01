@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[CreateAssetMenu(fileName = "Default Item", menuName = "Item",order = 0)]
+[CreateAssetMenu(fileName = "Default Item", menuName = "Item", order = 0)]
 public class ItemScriptableObject : ScriptableObject, IStorable
 {
     [SerializeField] private int probability;
@@ -23,6 +23,5 @@ public class ItemScriptableObject : ScriptableObject, IStorable
     [SerializeField] private int itemIndex;
 
     public int ItemIndex => itemIndex;
-
 
 }

@@ -8,11 +8,13 @@ using UnityEngine;
 using TMPro;
 public class InventoryHud : MonoBehaviour
 {
+    [Header("Items")]
     [SerializeField] private List<ItemScriptableObject> _itemsStored = new List<ItemScriptableObject>();
     [SerializeField] private GameObject itemSlotTemplate;
     [SerializeField] private List<InventorySlot> _itemSlots = new List<InventorySlot>();
     [SerializeField] private Transform itemSlotContainer;
     [SerializeField] private GameObject model;
+    [Header("Properties")]
     [SerializeField] private int _maxSlots;
     [SerializeField] private int _currentSlots;
     public event Action<int> onSelledItem;
@@ -25,7 +27,8 @@ public class InventoryHud : MonoBehaviour
         model.SetActive(false);
 
         HudManager.Instance.PierShop.onShop += ForceInventoryToShow;
-        //HudManager.Instance.PierShop.onShop += isOnShop;
+
+
         HudManager.Instance.PierShop.OnSell += SellItem;
     }
 
@@ -40,21 +43,29 @@ public class InventoryHud : MonoBehaviour
     }
     public void AddItemToInventory(ItemScriptableObject itemToAdd)
     {
-        bool assigned = false;
         if(_maxSlots >= _itemsStored.Count)
         {
-            
             for (int i = 0; i < _itemSlots.Count; i++)
             {
                 var item = _itemSlots[i];
-                if (item.isSlotEmpty() && assigned == false)
+                if (CheckForItem(itemToAdd) && !item.isSlotEmpty())
+                {
+                    if(item.Item == itemToAdd)
+                    {
+                        _itemsStored.Add(itemToAdd);
+                        item.Stack();
+                        return;
+                    }
+                }
+                else if (item.isSlotEmpty())
                 {
                     item.AddItem(itemToAdd);
                     _itemsStored.Add(itemToAdd);
-                    assigned = true;
                     return;
+
                 }
-            }
+
+            }   
         }
         else
         {
@@ -62,13 +73,44 @@ public class InventoryHud : MonoBehaviour
             return;
         }
     }
-    public void RemoveFromInventory(ItemScriptableObject itemToRemove)
+    public int GetItemQuantity(ItemScriptableObject itemToGet)
     {
-        if(itemToRemove != null)
+        if (CheckForItem(itemToGet))
         {
-            _itemsStored.Remove(itemToRemove);
-            OnRemoveItem?.Invoke();
+            foreach (var item in _itemSlots)
+            {
+                if(item.Item == itemToGet)
+                {
+                    return item.Quantity;
+                }
+            }
         }
+        return 0;
+    }
+    public void RemoveFromInventory(ItemScriptableObject itemToRemove, int quantity)
+    {
+        for (int i = 0; i < _itemsStored.Count; i++)
+        {
+           if(i >= quantity)
+            {
+                return;
+            }
+            else
+            {
+                foreach (var itemSlot in _itemSlots)
+                {
+                    if(itemSlot.Item == itemToRemove)
+                    {
+                        itemSlot.Destack();
+                            _itemsStored.Remove(itemSlot.Item);
+                        
+                    }
+                }
+
+            }
+
+        }
+            
     }
     public void ShowInventory()
     {

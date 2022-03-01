@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05eee7947318e7745970983a63fbee78, type: 3}
+  m_Name: DefaultQuest
+  m_EditorClassIdentifier: 
+  questDialogue:
+  - Hello Stranger, i'm starving in this island, can you give me somethings to survive
+    here, thank you!
+  - Ey Dude, i'm searching for something can you get me somo of this
+  quantityNeeded: 10
+  itemsNeeded:
+  - {fileID: 11400000, guid: 6feed4d9a34b61a499afb7fa97947037, type: 2}
+  - {fileID: 11400000, guid: b556cad03a9061d4091046a0a7b97eda, type: 2}
+  - {fileID: 11400000, guid: 64fca7a837b2e79489a2bd0bf721eb25, type: 2}
+  maxReward: 20

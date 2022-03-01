@@ -43,6 +43,7 @@ public class PlayerModel : BaseActor
         controller.onFish += Fish;
         controller.onMovePointer += MovePointer;
         HudManager.Instance.Inventory.onSelledItem += OnSell;
+        HudManager.Instance.QuestController.onDeliver += OnSell;
     }
 
     private void InitializeHud()

@@ -4,19 +4,23 @@ using UnityEngine;
 using System;
 public class HudManager : MonoBehaviour
 {
-    [SerializeField] private GameObject[] activeItems;
+    #region Menues
     [SerializeField] private RewardObtainText rewardObtainedText;
-    public RewardObtainText RewardObtainText => rewardObtainedText;
-
     [SerializeField] private PierShop pierShop;
-    public PierShop PierShop => pierShop;
-
     [SerializeField] private InventoryHud inventory;
-    public InventoryHud Inventory => inventory;
+    [SerializeField] private QuestController questController;
+    #endregion
 
-    private static HudManager instance;
+    #region references
+    public RewardObtainText RewardObtainText => rewardObtainedText;
+    public PierShop PierShop => pierShop;
+    public InventoryHud Inventory => inventory;
+    public QuestController QuestController => questController;
     public static HudManager Instance => instance;
-    
+    #endregion
+
+    [SerializeField] private GameObject[] activeItems;
+    private static HudManager instance;
     public event Action<bool> isOnMenue;
 
     private void Awake()
