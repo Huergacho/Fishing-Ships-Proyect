@@ -21,7 +21,6 @@ public class QuestZone : MonoBehaviour
     {
         hasFinished = true;
         startTimer = false;
-        OnQuest();
     }
     private void Update()
     {
@@ -46,7 +45,6 @@ public class QuestZone : MonoBehaviour
         {
             
             GenerateQuest();
-            HudManager.Instance.QuestController.GetQuest(currentDialogue, reward, itemNeeded.ShowImage, quantityNeeded, hasFinished, this);
         }
         else
         {
