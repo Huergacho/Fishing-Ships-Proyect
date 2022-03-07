@@ -61,23 +61,4 @@ public class QuestController : MonoBehaviour
         model.SetActive(false);
     }
 
-    //IEnumerator TypeLine(string currentDialogue)
-    //{
-    //    for (int i1 = 0; i1 < currentDialogue.Length; i1++)
-    //    {
-    //        if(i1 <= currentDialogue.Length)
-    //        {
-    //            char character = currentDialogue[i1];
-    //            questText.text += character;
-    //            yield return new WaitForSeconds(readSpeed);
-    //        }
-    //        else
-    //        {
-    //            StopCoroutine(TypeLine(currentDialogue));
-    //        }
-
-    //    }
-                                  
-    //}
-
 }

@@ -17,6 +17,7 @@ public class QuestZone : MonoBehaviour
     [SerializeField] private float questCooldown;
     private float currentTime;
     bool startTimer;
+    [SerializeField] private Transform interactImagePos;
     private void Start()
     {
         hasFinished = true;
@@ -67,19 +68,41 @@ public class QuestZone : MonoBehaviour
         hasFinished = false;
 
     }
-    private void OnCollisionEnter(Collision collision)
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.gameObject.layer == GameManager.instance.player.gameObject.layer)
+    //    {
+    //        OnQuest();
+    //        HudManager.Instance.QuestController.GetQuest(currentDialogue, reward, itemNeeded.ShowImage, quantityNeeded, hasFinished, this);
+    //    }
+    //}
+    //private void OnCollisionExit(Collision collision)
+    //{
+    //    if (collision.gameObject.layer == GameManager.instance.player.gameObject.layer)
+    //    {
+    //        HudManager.Instance.QuestController.HideQuest();
+
+    //    }
+    //}
+    private void OnTriggerStay(Collider other)
     {
-        if (collision.gameObject.layer == GameManager.instance.player.gameObject.layer)
+        if (other.gameObject.layer == GameManager.instance.player.gameObject.layer)
         {
-            OnQuest();
-            HudManager.Instance.QuestController.GetQuest(currentDialogue, reward, itemNeeded.ShowImage, quantityNeeded, hasFinished, this);
+            HudManager.Instance.InteractImage.Show(interactImagePos);
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                OnQuest();
+                HudManager.Instance.QuestController.GetQuest(currentDialogue, reward, itemNeeded.ShowImage, quantityNeeded, hasFinished, this);
+            }
+
         }
     }
-    private void OnCollisionExit(Collision collision)
+    private void OnTriggerExit(Collider other)
     {
-        if (collision.gameObject.layer == GameManager.instance.player.gameObject.layer)
+        if (other.gameObject.layer == GameManager.instance.player.gameObject.layer)
         {
             HudManager.Instance.QuestController.HideQuest();
+            HudManager.Instance.InteractImage.Hide();
 
         }
     }

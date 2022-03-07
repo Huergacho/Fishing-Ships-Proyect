@@ -162,12 +162,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 297468552}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0.058, z: 0}
-  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
+  m_LocalRotation: {x: 0.5, y: -0.5, z: 0.5, w: 0.5}
+  m_LocalPosition: {x: 0, y: 0.067099996, z: 0}
+  m_LocalScale: {x: 0.009999998, y: 0.01, z: 0.010000001}
   m_Children: []
-  m_Father: {fileID: 6748506244345250356}
-  m_RootOrder: 1
+  m_Father: {fileID: 6497915610449081929}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!108 &297468554
 Light:
@@ -409,6 +409,8 @@ GameObject:
   - component: {fileID: 783623619}
   - component: {fileID: 783623620}
   - component: {fileID: 783623626}
+  - component: {fileID: 452530941}
+  - component: {fileID: 452530942}
   m_Layer: 11
   m_Name: MainShip
   m_TagString: Untagged
@@ -431,6 +433,7 @@ Transform:
   - {fileID: 5332472900192623040}
   - {fileID: 7952403957189799212}
   - {fileID: 199761648}
+  - {fileID: 297468553}
   m_Father: {fileID: 6748506244345250356}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
@@ -493,11 +496,11 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 116
   m_CollisionDetection: 1
 --- !u!65 &478344143
 BoxCollider:
@@ -529,10 +532,9 @@ MonoBehaviour:
   mouseIndicator: {fileID: 3729915491287307546}
   distanceToFish: 10
   maxFishes: 10
-  actualMoney: 0
   boostFVIncrease: 10
-  fishesCatched: []
   fishSkill: 1
+  _inventory: {fileID: 452530941}
 --- !u!114 &783623620
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -566,6 +568,41 @@ MonoBehaviour:
   speedBoostLayer:
     serializedVersion: 2
     m_Bits: 1024
+  waterTag: Water
+--- !u!114 &452530941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5865634488544406771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7f1bff2ce72f19469dbbfb2a8c58754, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!195 &452530942
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5865634488544406771}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.026296152
+  m_Speed: 14
+  m_Acceleration: 10
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 0.013246886
+  m_BaseOffset: 0.006623443
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &6209304041071518662
 GameObject:
   m_ObjectHideFlags: 0
@@ -675,7 +712,6 @@ Transform:
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_Children:
   - {fileID: 6497915610449081929}
-  - {fileID: 297468553}
   - {fileID: 3729915491287307546}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -689,7 +725,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3729915492495837602, guid: 2adb8eb7bde487d4a9a739cd48dbe493, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3729915492495837602, guid: 2adb8eb7bde487d4a9a739cd48dbe493, type: 3}
       propertyPath: m_LocalScale.x

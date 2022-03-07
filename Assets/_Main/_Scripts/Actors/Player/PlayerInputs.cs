@@ -7,6 +7,8 @@ public class PlayerInputs : MonoBehaviour, Iinput
     [SerializeField] private LayerMask contactLayers;
     [SerializeField] private LayerMask fishLayerMask;
     [SerializeField] private LayerMask speedBoostLayer;
+    [SerializeField] private string waterTag;
+    //private bool _canMove;
     public bool isOnMenue { get; private set;}
     private void Start()  
     {
@@ -14,8 +16,14 @@ public class PlayerInputs : MonoBehaviour, Iinput
     }
     public bool IsMoving()
     {
-        
-        return Input.GetMouseButton(1);
+        //if (_canMove)
+        //{
+            return Input.GetMouseButton(1);
+        //}
+        //else
+        //{
+        //    return false;
+        //}
 
     }
     public bool isInteracting()
@@ -53,11 +61,32 @@ public class PlayerInputs : MonoBehaviour, Iinput
     public Vector3 UpdateMousePosition()
     {
 
+        //if (Physics.Raycast(CalculateMousePos(), out RaycastHit hitInfo, Mathf.Infinity))
+        //{
+        //    if ((contactLayers.value & (1 << hitInfo.transform.gameObject.layer)) > 0)
+        //    {
+        //        _canMove = true;
+
+        //        return hitInfo.point;
+        //    }
+        //    else
+        //    {
+        //        _canMove = false;
+        //        return hitInfo.point;
+        //    }
+        //}
+        //else
+        //{
+        //    _canMove = false;
+
+        //    return hitInfo.point;
+        //}
         if (Physics.Raycast(CalculateMousePos(), out RaycastHit hitInfo, Mathf.Infinity, contactLayers))
         {
             return hitInfo.point;
         }
         else return Vector3.zero;
+
     }
     public bool WantShowInventory()
     {

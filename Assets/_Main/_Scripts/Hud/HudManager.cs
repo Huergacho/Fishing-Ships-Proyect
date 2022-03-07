@@ -9,6 +9,7 @@ public class HudManager : MonoBehaviour
     [SerializeField] private PierShop pierShop;
     [SerializeField] private InventoryHud inventory;
     [SerializeField] private QuestController questController;
+    [SerializeField] private InteractImage interactImage;
     #endregion
 
     #region references
@@ -16,6 +17,7 @@ public class HudManager : MonoBehaviour
     public PierShop PierShop => pierShop;
     public InventoryHud Inventory => inventory;
     public QuestController QuestController => questController;
+    public InteractImage InteractImage => interactImage;
     public static HudManager Instance => instance;
     #endregion
 
@@ -49,6 +51,7 @@ public class HudManager : MonoBehaviour
     public void EnterInMenu()
     {
         isOnMenue.Invoke(true);
+        interactImage.Hide();
     }
     public void ExitMenue()
     {

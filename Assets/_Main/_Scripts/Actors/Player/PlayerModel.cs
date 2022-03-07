@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.AI;
 public class PlayerModel : BaseActor
 {
     #region SerializeFields
@@ -9,9 +10,11 @@ public class PlayerModel : BaseActor
     [SerializeField] private Transform mouseIndicator;
     [SerializeField] private float distanceToFish;
     [SerializeField]private int maxFishes;
-    [SerializeField] private int actualMoney;
     [SerializeField] private float boostFVIncrease;
     [SerializeField] private float fishSkill;
+    [SerializeField] private Inventory _inventory;
+    private NavMeshAgent navMeshAgent;
+    public Inventory PlayerInventory => _inventory;
     public float FishSkill => fishSkill;
     private Camera _mainCam;
     public Camera MainCam => _mainCam;
@@ -22,8 +25,10 @@ public class PlayerModel : BaseActor
     public float DistanceToFish => distanceToFish;
     public event Action<FishPond> OnPondAssign;
     public event Action<int, int> UpdateFishCount;
+
     private void Awake()
     {
+        navMeshAgent = GetComponent<NavMeshAgent>();
         _rb = GetComponent<Rigidbody>();
         pointerAnimator = mouseIndicator.gameObject.GetComponent<Animator>();
     }
@@ -32,36 +37,30 @@ public class PlayerModel : BaseActor
     {
         _mainCam = Camera.main;
         GameManager.instance.player = this;
-        InitializeHud();
         base.Start();
     }
-
-    public void SuscribeEvents(PlayerStateMachine controller)
+    public void SuscribeEvents(PlayerController controller)
     {
         controller.onMove += Move;
         controller.onIdle += Idle;
         controller.onFish += Fish;
         controller.onMovePointer += MovePointer;
-        HudManager.Instance.Inventory.onSelledItem += OnSell;
-        HudManager.Instance.QuestController.onDeliver += OnSell;
-    }
 
-    private void InitializeHud()
-    {
-        HudManager.Instance.PierShop.UpdateMoneyCount(actualMoney);
     }
     
     #region Movement
 
     public void Idle()
-    { 
-
-    }
-
-    public void Move()
     {
-        MoveAtMousePos();
-
+        _rb.velocity = Vector3.zero;
+    }
+    public void Move(Vector3 destiny)
+    {
+        //var dest = destiny.normalized;
+        //print(dest);
+        //destiny *= speed;
+        //destiny.y= _rb.velocity.y;
+        MoveAtMousePos(destiny);
     }
     public void PlayIndicator()
     {
@@ -71,22 +70,35 @@ public class PlayerModel : BaseActor
 
     #region Mouse Movement Calculation
 
-    private void SmoothRotation()
-    {
-        var direction = (mouseIndicator.position - transform.position);
-        if (direction != Vector3.zero)
-        {
-            var rotDestiny = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotDestiny, actorStats.RotSpeed * Time.deltaTime);
-        }
-    }
+    //private void SmoothRotation(Vector3 dest)
+    //{
+    //    var direction = (dest - transform.position);
+    //    if (direction != Vector3.zero)
+    //    {
+    //        var rotDestiny = Quaternion.LookRotation(direction);
+    //        transform.rotation = Quaternion.Slerp(transform.rotation, rotDestiny, actorStats.RotSpeed * Time.deltaTime);
+    //    }
+    //}
 
-    private void MoveAtMousePos() 
+    private void MoveAtMousePos(Vector3 dest)
     {
-        SmoothRotation();
-        transform.position = Vector3.MoveTowards(transform.position, mouseIndicator.position, speed * Time.deltaTime); 
-    }
+        navMeshAgent.SetDestination(dest);
+        navMeshAgent.speed = speed;
+        //SmoothRotation(new Vector3(dest.x, 0, dest.z));
+        //var distance = Vector3.Distance(transform.position, dest);
 
+
+        ////if (distance >= 0.5f)
+        ////{
+        ////    //_rb.velocity = Vector3.MoveTowards(_rb.position, destiny, speed * Time.deltaTime);
+        ////    //_rb.velocity =  dest;
+        ////    _rb.position = Vector3.MoveTowards(_rb.position, new Vector3(dest.x, 0, dest.z), speed * Time.deltaTime);
+        ////    //_rb.velocity = new Vector3(_rb.velocity.x * dest.x, 0, _rb.velocity.z * dest.z) * speed * Time.deltaTime;
+        ////    //transform.position = Vector3.MoveTowards(transform.position, new Vector3(dest.x, 0, dest.z), speed * Time.deltaTime);  //Funcionando
+        ////}
+
+
+    }
     public void MovePointer(Vector3 target)
     {
         mouseIndicator.position = target;
@@ -119,24 +131,5 @@ public class PlayerModel : BaseActor
         }
     }
 
-    #endregion
-    #region InventoryControll
-
-    private void OnSell(int value)
-    {
-        AddMoney(value);
-    }
-    public void AddToInventory(ItemScriptableObject itemToAdd)
-    {
-        HudManager.Instance.Inventory.AddItemToInventory(itemToAdd);
-        HudManager.Instance.RewardObtainText.SetObtainedItem(itemToAdd.ItemName);
-    }
-    private void AddMoney(int moneyToAdd)
-    {
-        actualMoney += moneyToAdd;
-        HudManager.Instance.PierShop.UpdateMoneyCount(actualMoney);
-    }
-
-    
     #endregion
 }

@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - FishPond
+  - Water
   layers:
   - Default
   - TransparentFX
@@ -18,8 +19,8 @@ TagManager:
   - FishIndicator
   - SpeedBoost
   - Player
-  - 
-  - 
+  - Terrain
+  - Obstacle
   - 
   - 
   - 

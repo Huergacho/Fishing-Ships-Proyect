@@ -1,12 +1,12 @@
 ﻿using System.Collections;
 using UnityEngine;
 using System;
-public class PlayerStateMachine : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     private FSM<PlayerStates> _fsm;
     private PlayerModel _playerModel;
     private PlayerInputs _playerInputs;
-    public event Action onMove;
+    public event Action<Vector3> onMove;
     public event Action onIdle;
     public event Action onInteract;
     public event Action onMenue;
@@ -23,10 +23,10 @@ public class PlayerStateMachine : MonoBehaviour
         _playerModel.SuscribeEvents(this);
         
     }
-    private void OnMoveCommand()
+    private void OnMoveCommand(Vector3 dest)
     {
         ShowInventory();
-        onMove?.Invoke();
+        onMove?.Invoke(dest);
         onMovePointer?.Invoke(_playerInputs.UpdateMousePosition());
     }
     private void OnMenueCommand()
@@ -44,11 +44,12 @@ public class PlayerStateMachine : MonoBehaviour
         ShowInventory();
         onIdle?.Invoke();
         onMovePointer?.Invoke(_playerInputs.UpdateMousePosition());
+
     }
     private void FsmInit()
     {
         var idle = new PlayerIdleState<PlayerStates>(OnIdleCommand, PlayerStates.Sailing,PlayerStates.Fishing,PlayerStates.OnMenue ,_playerInputs);
-        var sail = new PlayerSailState<PlayerStates>(OnMoveCommand, PlayerStates.Idle,PlayerStates.Fishing, PlayerStates.OnMenue, _playerInputs);
+        var sail = new PlayerSailState<PlayerStates>(OnMoveCommand, PlayerStates.Idle,PlayerStates.Fishing, PlayerStates.OnMenue, _playerInputs,_playerModel.transform);
         var fish = new PlayerFishingState<PlayerStates>(OnFishingCommand, PlayerStates.Sailing,PlayerStates.Idle, _playerInputs);
         var menue = new PlayerOnMenueState<PlayerStates>(OnMenueCommand, PlayerStates.Idle, _playerInputs);
         //idle 
