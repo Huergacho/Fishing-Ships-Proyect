@@ -60,7 +60,6 @@ class InventorySlot : MonoBehaviour
     public void RemoveItem()
     {
         _controller.RemoveFromInventory(this.Item, 1);
-        print("removido");
     }
     private void WipeSlot()
     {
@@ -78,7 +77,6 @@ class InventorySlot : MonoBehaviour
         {
             return;
         }
-        print("Vendido");
         RemoveItem();
     }
     public bool isSlotEmpty()
