@@ -83,7 +83,7 @@ Material:
     m_Floats:
     - FOAM_SHADOWS: 1
     - INTERSECTION_EFFECTS: 1
-    - SHORE_MOVEMENT: 0
+    - SHORE_MOVEMENT: 1
     - SURFACE_FOAM: 0
     - WATER_LIGHTING: 1
     - WORLD_SPACE_UV: 1
