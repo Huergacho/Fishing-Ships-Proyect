@@ -16,7 +16,7 @@ MonoBehaviour:
   - Hello Stranger, i'm starving in this island, can you give me somethings to survive
     here, thank you!
   - Ey Dude, i'm searching for something can you get me somo of this
-  quantityNeeded: 10
+  quantityNeeded: 1
   itemsNeeded:
   - {fileID: 11400000, guid: 6feed4d9a34b61a499afb7fa97947037, type: 2}
   - {fileID: 11400000, guid: b556cad03a9061d4091046a0a7b97eda, type: 2}

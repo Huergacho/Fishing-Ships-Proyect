@@ -11,8 +11,9 @@ public class QuestController : MonoBehaviour
     [Header("Visuals")]
 
     [SerializeField] private GameObject model;
-    [SerializeField] private TextMeshProUGUI questText;
     [SerializeField] private Image itemNeededImage;
+    [SerializeField] private TextMeshProUGUI timerText;
+    [SerializeField] private TextMeshProUGUI questText;
     [SerializeField] private TextMeshProUGUI rewardText;
     [SerializeField] private TextMeshProUGUI itemQuantityText;
     [SerializeField] private TextMeshProUGUI timeLapsedText;
@@ -22,7 +23,6 @@ public class QuestController : MonoBehaviour
     public event Action<int> onDeliver;
     [Header("Dialogue Properties")]
     [SerializeField] private float readSpeed;
-
     #endregion
     private QuestZone lastQuestZone = null;
 
@@ -37,6 +37,7 @@ public class QuestController : MonoBehaviour
     {
         onDeliver?.Invoke(value);
         deliverButton.GetComponentInChildren<TextMeshProUGUI>().text = "Delivered";
+        ShowEmptyQuest();
         deliverButton.interactable = false;
     }
     public void SuscribeToButtons()
@@ -46,19 +47,35 @@ public class QuestController : MonoBehaviour
     public void GetQuest(string currentDialogue, int reward, Sprite itemIcon,int quantityNeeded, bool hasFinished, QuestZone lastQuest)
     {
         questText.text = string.Empty;
+        itemNeededImage.enabled = true;
         itemNeededImage.sprite = itemIcon;
+        Color newColor = itemNeededImage.color;
+        newColor.a = 1f;
         rewardText.text = $"{reward}";
         itemQuantityText.text = $"{quantityNeeded}";
         lastQuestZone = lastQuest;
         questText.text = currentDialogue;
-        model.SetActive(true);
         deliverButton.GetComponentInChildren<TextMeshProUGUI>().text = "Deliver";
         deliverButton.interactable = true;
     }
-
+    public void ShowQuest()
+    {
+        model.SetActive(true);
+    }
     public void HideQuest()
     {
         model.SetActive(false);
     }
-
+    public void ShowEmptyQuest()
+    {
+        WipeInfo();
+        model.SetActive(true);
+    }
+    private void WipeInfo()
+    {
+        itemQuantityText.text = string.Empty;
+        itemNeededImage.enabled = false;
+        rewardText.text = string.Empty;
+        questText.text = "Wait for a new assigment";
+    }
 }

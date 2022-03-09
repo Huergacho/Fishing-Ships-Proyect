@@ -56,10 +56,6 @@ public class PlayerModel : BaseActor
     }
     public void Move(Vector3 destiny)
     {
-        //var dest = destiny.normalized;
-        //print(dest);
-        //destiny *= speed;
-        //destiny.y= _rb.velocity.y;
         MoveAtMousePos(destiny);
     }
     public void PlayIndicator()
@@ -84,19 +80,6 @@ public class PlayerModel : BaseActor
     {
         navMeshAgent.SetDestination(dest);
         navMeshAgent.speed = speed;
-        //SmoothRotation(new Vector3(dest.x, 0, dest.z));
-        //var distance = Vector3.Distance(transform.position, dest);
-
-
-        ////if (distance >= 0.5f)
-        ////{
-        ////    //_rb.velocity = Vector3.MoveTowards(_rb.position, destiny, speed * Time.deltaTime);
-        ////    //_rb.velocity =  dest;
-        ////    _rb.position = Vector3.MoveTowards(_rb.position, new Vector3(dest.x, 0, dest.z), speed * Time.deltaTime);
-        ////    //_rb.velocity = new Vector3(_rb.velocity.x * dest.x, 0, _rb.velocity.z * dest.z) * speed * Time.deltaTime;
-        ////    //transform.position = Vector3.MoveTowards(transform.position, new Vector3(dest.x, 0, dest.z), speed * Time.deltaTime);  //Funcionando
-        ////}
-
 
     }
     public void MovePointer(Vector3 target)

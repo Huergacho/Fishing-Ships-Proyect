@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using UnityEngine.UI;
+using TMPro;
 public class QuestZone : MonoBehaviour
 {
     [SerializeField] private QuestScriptableObject quests;
@@ -16,42 +17,31 @@ public class QuestZone : MonoBehaviour
     [SerializeField] private int reward;
     [SerializeField] private float questCooldown;
     private float currentTime;
-    bool startTimer;
     [SerializeField] private Transform interactImagePos;
+    [SerializeField] private TextMeshProUGUI _timeText;
     private void Start()
     {
-        hasFinished = true;
-        startTimer = false;
+        currentTime = questCooldown;
+        GenerateQuest();
     }
+
     private void Update()
-    {
-        if(startTimer == false)
-        {
-            return;
-        }
-        else
-        {
-            currentTime += Time.deltaTime;
-            if(currentTime >= questCooldown)
-            {
-                OnQuest();
-                currentTime = 0;
-                startTimer = false;
-            }
-        }
-    }
-    private void OnQuest()
     {
         if (hasFinished)
         {
+            if (!CanStartNewMission())
+            {
+                _timeText.text = ((int)currentTime).ToString();
+                return; 
+            }
+            else
+            {
+                GenerateQuest();
+            } 
             
-            GenerateQuest();
-        }
-        else
-        {
-            return;
         }
     }
+
     private void GenerateQuest()
     {
         var randomDialogue = Random.Range(0, quests.QuestDialogue.Length);
@@ -65,36 +55,31 @@ public class QuestZone : MonoBehaviour
 
         var randomReward = Random.Range(10, quests.MaxReward + 1);
         reward = randomReward;
+            
+        HudManager.Instance.QuestController.GetQuest(currentDialogue, reward, itemNeeded.ShowImage, quantityNeeded, hasFinished, this);
         hasFinished = false;
 
     }
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    if (collision.gameObject.layer == GameManager.instance.player.gameObject.layer)
-    //    {
-    //        OnQuest();
-    //        HudManager.Instance.QuestController.GetQuest(currentDialogue, reward, itemNeeded.ShowImage, quantityNeeded, hasFinished, this);
-    //    }
-    //}
-    //private void OnCollisionExit(Collision collision)
-    //{
-    //    if (collision.gameObject.layer == GameManager.instance.player.gameObject.layer)
-    //    {
-    //        HudManager.Instance.QuestController.HideQuest();
 
-    //    }
-    //}
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.layer == GameManager.instance.player.gameObject.layer)
         {
+           
             HudManager.Instance.InteractImage.Show(interactImagePos);
-            if (Input.GetKeyDown(KeyCode.F))
+            if (Input.GetKey(KeyCode.F))
             {
-                OnQuest();
-                HudManager.Instance.QuestController.GetQuest(currentDialogue, reward, itemNeeded.ShowImage, quantityNeeded, hasFinished, this);
+                if (!hasFinished)
+                {
+                    HudManager.Instance.QuestController.GetQuest(currentDialogue, reward, itemNeeded.ShowImage, quantityNeeded, hasFinished, this);
+                    HudManager.Instance.QuestController.ShowQuest();
+                }
+                else
+                {
+                    HudManager.Instance.QuestController.ShowEmptyQuest();
+                }
+                
             }
-
         }
     }
     private void OnTriggerExit(Collider other)
@@ -106,21 +91,34 @@ public class QuestZone : MonoBehaviour
 
         }
     }
+
     public void Deliver()
     {
         if (HudManager.Instance.Inventory.GetItemQuantity(itemNeeded) >= quantityNeeded)
         {     
-            
-                HudManager.Instance.Inventory.RemoveFromInventory(itemNeeded, quantityNeeded);
-                HudManager.Instance.QuestController.Deliver(reward);
-                hasFinished = true;
-                startTimer = true;
-                //HudManager.Instance.QuestController.GetQuest(currentDialogue, reward, itemNeeded.ShowImage, quantityNeeded, hasFinished, this);
-         
+            HudManager.Instance.Inventory.RemoveFromInventory(itemNeeded, quantityNeeded);
+            HudManager.Instance.QuestController.Deliver(reward);
+            hasFinished = true;
         }
         else
         {
             print("VOCE NO TEIM SUFICEMTE ITEM CARALHO");
+        }
+    }
+
+    private bool CanStartNewMission()
+    {
+
+        currentTime -= Time.deltaTime;
+        if (currentTime <= 0)
+        {
+
+            currentTime = questCooldown;
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 }
