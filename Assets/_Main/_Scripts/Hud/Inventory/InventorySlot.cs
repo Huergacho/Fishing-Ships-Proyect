@@ -19,7 +19,7 @@ class InventorySlot : MonoBehaviour
 
     private void Start()
     {
-        clearButton?.onClick.AddListener(WipeSlot);
+        clearButton?.onClick.AddListener(RemoveItem);
         if(Item == null)
         {
             WipeSlot(); 
@@ -39,17 +39,13 @@ class InventorySlot : MonoBehaviour
     }
     public void Destack()
     {
-        if (_item != null)
+        if (_item == null)
         {
-            if (quantity <= 1)
-            {
-                WipeSlot();
-            }
-            else
-            {
-                quantity--;
-                stackText.text = $"{quantity}";
-            }
+            return;
+        }
+        else
+        {
+            CheckQuantity();
         }
     }
     public void AddItem(ItemScriptableObject newItem)
@@ -64,8 +60,7 @@ class InventorySlot : MonoBehaviour
     public void RemoveItem()
     {
         _controller.RemoveFromInventory(this.Item, 1);
-        Destack();
-
+        print("removido");
     }
     private void WipeSlot()
     {
@@ -83,6 +78,7 @@ class InventorySlot : MonoBehaviour
         {
             return;
         }
+        print("Vendido");
         RemoveItem();
     }
     public bool isSlotEmpty()
@@ -95,5 +91,18 @@ class InventorySlot : MonoBehaviour
         {
             return true;
         }
+    }
+    private void CheckQuantity()
+    {
+        if(quantity <= 1)
+        {
+            WipeSlot();
+        }
+        if(quantity >= 2)
+        {
+            quantity--;
+            stackText.text = $"{quantity}";
+        }
+
     }
 }

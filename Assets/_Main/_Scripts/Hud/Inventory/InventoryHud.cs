@@ -101,8 +101,8 @@ public class InventoryHud : MonoBehaviour
                 {
                     if(itemSlot.Item == itemToRemove)
                     {
+                        _itemsStored.Remove(itemSlot.Item);
                         itemSlot.Destack();
-                            _itemsStored.Remove(itemSlot.Item);
                         
                     }
                 }
